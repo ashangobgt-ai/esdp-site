@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESDP Student Verification QR</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            align-items: center;
+            background: #eef3f8;
+            color: #172033;
+            display: flex;
+            font-family: Arial, "Noto Sans Devanagari", sans-serif;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .qr-card {
+            background: #fff;
+            border: 1px solid #d8e2ee;
+            border-radius: 8px;
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+            max-width: 430px;
+            padding: 26px;
+            text-align: center;
+            width: 100%;
+        }
+
+        h1 {
+            color: #075985;
+            font-size: 1.45rem;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #475467;
+            margin-bottom: 18px;
+        }
+
+        img {
+            border: 10px solid #f8fafc;
+            border-radius: 6px;
+            height: 280px;
+            width: 280px;
+        }
+
+        .link-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            color: #334155;
+            font-size: 0.86rem;
+            margin: 18px 0;
+            overflow-wrap: anywhere;
+            padding: 12px;
+        }
+
+        .note {
+            color: #667085;
+            font-size: 0.9rem;
+            margin-bottom: 18px;
+        }
+
+        .open-link {
+            color: #075985;
+            display: inline-block;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-decoration: none;
+        }
+
+        .open-link:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            background: #075985;
+            border: 0;
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 700;
+            padding: 11px 18px;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+            }
+
+            button,
+            .note {
+                display: none;
+            }
+
+            .qr-card {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="qr-card">
+        <h1>ESDP Student Verification</h1>
+        <p class="subtitle">Scan QR and enter student roll number</p>
+        <img id="qrImage" alt="ESDP student verification QR code">
+        <div class="link-box" id="targetLink"></div>
+        <a class="open-link" id="openLink" href="https://singular-profiterole-dcb667.netlify.app/">Open Verification Website</a>
+        <p class="note">यह common QR है. Scan करने पर verification page खुलेगा, फिर roll number डालकर student record देखा जा सकेगा.</p>
+        <button onclick="window.print()">Print / Save PDF</button>
+    </main>
+
+    <script>
+        const targetUrl = "https://singular-profiterole-dcb667.netlify.app/";
+        document.getElementById("targetLink").textContent = targetUrl;
+        document.getElementById("openLink").href = targetUrl;
+        document.getElementById("qrImage").src = "https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=" + encodeURIComponent(targetUrl);
+    </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="400" viewBox="0 0 320 400" role="img" aria-labelledby="title desc">
+  <title id="title">Student photo placeholder</title>
+  <desc id="desc">Default student photo placeholder</desc>
+  <rect width="320" height="400" fill="#f1f5f9"/>
+  <circle cx="160" cy="130" r="60" fill="#94a3b8"/>
+  <path d="M76 330c11-70 58-108 84-108s73 38 84 108" fill="#94a3b8"/>
+  <text x="160" y="372" fill="#475569" font-family="Arial, sans-serif" font-size="24" font-weight="700" text-anchor="middle">Student Photo</text>
+</svg>
