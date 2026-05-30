@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESDP Student Result Record</title>
+    <title>ESDP Council | Educational & Skill Development Portal</title>
     <style>
         * {
             box-sizing: border-box;
@@ -11,131 +11,520 @@
             padding: 0;
         }
 
+        :root {
+            --blue: #0b4f8a;
+            --deep: #07345f;
+            --gold: #f5b301;
+            --red: #c8202f;
+            --green: #15803d;
+            --ink: #172033;
+            --muted: #5f6f85;
+            --line: #d8e2ee;
+            --soft: #f3f7fb;
+        }
+
         body {
-            background: #eef3f8;
-            color: #1d2939;
+            background: #ffffff;
+            color: var(--ink);
             font-family: Arial, "Noto Sans Devanagari", sans-serif;
-            line-height: 1.6;
+            line-height: 1.55;
         }
 
-        header {
-            background: #075985;
-            color: #fff;
-            padding: 18px 20px;
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
-        .header-inner {
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .wrap {
+            margin: 0 auto;
+            max-width: 1180px;
+            padding: 0 18px;
+        }
+
+        .topbar {
+            background: var(--deep);
+            color: #e8f4ff;
+            font-size: 0.9rem;
+        }
+
+        .topbar .wrap,
+        .brand-row,
+        .nav-row {
             align-items: center;
             display: flex;
-            gap: 18px;
             justify-content: space-between;
-            margin: auto;
-            max-width: 1180px;
         }
 
-        .brand h1 {
-            font-size: 1.45rem;
-            line-height: 1.3;
+        .topbar .wrap {
+            gap: 16px;
+            min-height: 38px;
         }
 
-        .brand p {
-            color: #d8eefb;
-            font-size: 0.95rem;
-            margin-top: 4px;
+        .top-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        .badge {
-            background: #facc15;
-            border-radius: 6px;
-            color: #1f2937;
+        .top-links a {
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 4px;
+            padding: 5px 9px;
+        }
+
+        .brand-row {
+            background: #fff;
+            gap: 18px;
+            padding: 18px;
+        }
+
+        .logo-mark {
+            align-items: center;
+            background: linear-gradient(135deg, var(--blue), #1382c8);
+            border: 4px solid #e7f4ff;
+            border-radius: 50%;
+            color: #fff;
+            display: flex;
+            flex: 0 0 auto;
+            font-size: 1.35rem;
+            font-weight: 900;
+            height: 76px;
+            justify-content: center;
+            letter-spacing: 0;
+            width: 76px;
+        }
+
+        .brand-title {
+            flex: 1;
+        }
+
+        .brand-title h1 {
+            color: var(--blue);
+            font-size: clamp(1.45rem, 3vw, 2.35rem);
+            line-height: 1.12;
+            text-transform: uppercase;
+        }
+
+        .brand-title p {
+            color: #41556d;
+            font-size: 0.98rem;
             font-weight: 700;
-            padding: 9px 14px;
+            margin-top: 5px;
+        }
+
+        .iso-box {
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            color: var(--deep);
+            font-weight: 800;
+            padding: 10px 14px;
+            text-align: center;
+        }
+
+        nav {
+            background: var(--blue);
+            border-bottom: 4px solid var(--gold);
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        .nav-row {
+            flex-wrap: wrap;
+            gap: 2px;
+        }
+
+        .nav-row a {
+            font-size: 0.9rem;
+            font-weight: 800;
+            padding: 13px 11px;
+        }
+
+        .nav-row a:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .quick-panel {
+            background: #f7fbff;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .quick-grid {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(6, 1fr);
+            padding: 12px 18px;
+        }
+
+        .quick-grid a {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            color: var(--deep);
+            font-size: 0.84rem;
+            font-weight: 800;
+            min-height: 48px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .ticker {
+            background: #fff7e1;
+            border-bottom: 1px solid #f7d36f;
+            color: #7a3600;
+            font-weight: 800;
+            overflow: hidden;
+            padding: 9px 0;
             white-space: nowrap;
         }
 
-        main {
-            margin: auto;
-            max-width: 1180px;
-            padding: 28px 20px 46px;
+        .ticker span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: slide 24s linear infinite;
+        }
+
+        @keyframes slide {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
         }
 
         .hero {
-            background: #fff;
-            border: 1px solid #d9e2ec;
-            border-radius: 8px;
-            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+            background:
+                linear-gradient(90deg, rgba(7, 52, 95, 0.92), rgba(11, 79, 138, 0.72)),
+                url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=82") center/cover;
+            color: #fff;
+        }
+
+        .hero-grid {
             display: grid;
             gap: 28px;
-            grid-template-columns: 1.05fr 0.95fr;
+            grid-template-columns: 1.08fr 0.92fr;
+            min-height: 430px;
+            padding: 46px 18px;
+        }
+
+        .hero-copy {
+            align-self: center;
+        }
+
+        .hero-copy h2 {
+            font-size: clamp(2rem, 4.2vw, 3.5rem);
+            line-height: 1.08;
+            max-width: 760px;
+            text-transform: uppercase;
+        }
+
+        .hero-copy p {
+            color: #e7f5ff;
+            font-size: 1.08rem;
+            margin: 16px 0 22px;
+            max-width: 720px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 0.95rem;
+            font-weight: 900;
+            padding: 12px 16px;
+            text-align: center;
+        }
+
+        .btn.gold {
+            background: var(--gold);
+            color: #2b2100;
+        }
+
+        .btn.light {
+            background: #fff;
+            color: var(--blue);
+        }
+
+        .notice-board {
+            align-self: center;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 8px;
+            color: var(--ink);
             overflow: hidden;
         }
 
-        .hero-text {
-            padding: 34px;
-        }
-
-        .hero-text h2 {
-            color: #075985;
-            font-size: 2rem;
-            line-height: 1.25;
-            margin-bottom: 12px;
-        }
-
-        .hero-text p {
-            color: #475467;
+        .notice-board h3 {
+            background: var(--red);
+            color: #fff;
             font-size: 1.05rem;
-            margin-bottom: 22px;
+            padding: 12px 16px;
+            text-transform: uppercase;
         }
 
-        .quick-stats {
-            display: grid;
-            gap: 12px;
-            grid-template-columns: repeat(3, 1fr);
+        .notice-list {
+            list-style: none;
         }
 
-        .vocational-photo {
-            border-radius: 8px;
+        .notice-list li {
+            border-bottom: 1px solid #edf2f7;
+            padding: 13px 16px;
+        }
+
+        .notice-list strong {
+            color: var(--blue);
             display: block;
-            height: 220px;
-            margin-top: 22px;
+            font-size: 0.84rem;
+            text-transform: uppercase;
+        }
+
+        section {
+            padding: 42px 0;
+        }
+
+        .section-title {
+            color: var(--blue);
+            font-size: 1.65rem;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .section-lead {
+            color: var(--muted);
+            margin-bottom: 22px;
+            max-width: 850px;
+        }
+
+        .about-grid {
+            display: grid;
+            gap: 28px;
+            grid-template-columns: 1fr 0.86fr;
+        }
+
+        .about-card,
+        .director-card,
+        .verify-box,
+        .course-card,
+        .award-card,
+        .update-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .about-card {
+            padding: 26px;
+        }
+
+        .feature-list {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(2, 1fr);
+            list-style: none;
+            margin-top: 18px;
+        }
+
+        .feature-list li {
+            background: var(--soft);
+            border-left: 4px solid var(--gold);
+            border-radius: 5px;
+            font-weight: 800;
+            padding: 10px 12px;
+        }
+
+        .director-card {
+            overflow: hidden;
+        }
+
+        .director-card img {
+            height: 230px;
             object-fit: cover;
             width: 100%;
         }
 
-        .stat {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 14px;
+        .director-body {
+            padding: 20px;
+        }
+
+        .director-body h3 {
+            color: var(--deep);
+            margin-bottom: 6px;
+        }
+
+        .association {
+            background: var(--soft);
+            border-bottom: 1px solid var(--line);
+            border-top: 1px solid var(--line);
+        }
+
+        .association-strip {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .association-strip div {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            color: var(--deep);
+            font-weight: 900;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .awards-grid,
+        .courses-grid,
+        .updates-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .course-tools {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: 1fr auto;
+            margin-bottom: 18px;
+        }
+
+        .course-tools input {
+            width: 100%;
+        }
+
+        .course-total {
+            align-items: center;
+            background: var(--deep);
+            border-radius: 6px;
+            color: #fff;
+            display: flex;
+            font-weight: 900;
+            justify-content: center;
+            min-width: 170px;
+            padding: 11px 14px;
+            text-align: center;
+        }
+
+        .award-card {
+            overflow: hidden;
+        }
+
+        .award-card img {
+            height: 140px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .award-card div,
+        .course-card,
+        .update-card {
+            padding: 16px;
+        }
+
+        .course-card {
+            display: flex;
+            flex-direction: column;
+            min-height: 150px;
+        }
+
+        .award-card h3,
+        .course-card h3,
+        .update-card h3 {
+            color: var(--deep);
+            font-size: 1rem;
+            line-height: 1.25;
+            margin-bottom: 8px;
+        }
+
+        .course-code {
+            color: var(--red);
+            font-size: 0.78rem;
+            font-weight: 900;
+            margin-bottom: 7px;
+            text-transform: uppercase;
+        }
+
+        .course-count {
+            color: var(--green);
+            font-weight: 900;
+            margin-top: auto;
+        }
+
+        .stats {
+            background: var(--deep);
+            color: #fff;
+        }
+
+        .stats-grid {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(5, 1fr);
+            text-align: center;
         }
 
         .stat strong {
-            color: #075985;
+            color: var(--gold);
             display: block;
-            font-size: 1.35rem;
+            font-size: 2rem;
+            line-height: 1;
         }
 
         .stat span {
-            color: #64748b;
-            font-size: 0.86rem;
+            color: #dcecff;
+            display: block;
+            font-weight: 800;
+            margin-top: 8px;
         }
 
-        .search-panel {
-            background: #f8fafc;
-            border-left: 1px solid #d9e2ec;
-            padding: 34px;
+        .verify-section {
+            background: #f7fbff;
         }
 
-        .search-panel h3 {
-            color: #0f172a;
-            font-size: 1.25rem;
+        .verify-grid {
+            display: grid;
+            gap: 22px;
+            grid-template-columns: 0.82fr 1.18fr;
+        }
+
+        .verify-box {
+            padding: 22px;
+        }
+
+        .verify-form-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
             margin-bottom: 14px;
+            padding: 16px;
+        }
+
+        .verify-form-card h3 {
+            color: var(--deep);
+            font-size: 1.02rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .verify-form-card small {
+            color: var(--muted);
+            display: block;
+            margin-top: 8px;
         }
 
         label {
-            color: #344054;
+            color: var(--deep);
             display: block;
-            font-weight: 700;
+            font-weight: 900;
             margin-bottom: 8px;
         }
 
@@ -145,89 +534,85 @@
         }
 
         input {
-            border: 1px solid #cbd5e1;
+            border: 1px solid #b8c8d9;
             border-radius: 6px;
-            color: #1f2937;
+            color: var(--ink);
             flex: 1;
             font-size: 1rem;
             min-width: 0;
             padding: 12px 13px;
         }
 
+        select {
+            background: #fff;
+            border: 1px solid #b8c8d9;
+            border-radius: 6px;
+            color: var(--ink);
+            font-size: 1rem;
+            padding: 12px 13px;
+            width: 100%;
+        }
+
         input:focus {
-            border-color: #0284c7;
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(11, 79, 138, 0.14);
             outline: none;
         }
 
-        button {
-            background: #075985;
-            border: 0;
-            border-radius: 6px;
+        .verify-box button {
+            background: var(--blue);
             color: #fff;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 700;
-            padding: 12px 16px;
-        }
-
-        button:hover {
-            background: #0369a1;
-        }
-
-        .secondary-btn {
-            background: #e2e8f0;
-            color: #0f172a;
-        }
-
-        .secondary-btn:hover {
-            background: #cbd5e1;
         }
 
         .hint {
-            color: #64748b;
+            color: var(--muted);
             font-size: 0.9rem;
-            margin-top: 12px;
-        }
-
-        .website-link {
-            color: #075985;
-            display: inline-block;
-            font-weight: 700;
-            margin-top: 12px;
-            text-decoration: none;
-        }
-
-        .website-link:hover {
-            text-decoration: underline;
+            margin-top: 10px;
         }
 
         .result-card {
             background: #fff;
-            border: 1px solid #d9e2ec;
+            border: 1px solid var(--line);
             border-radius: 8px;
-            margin-top: 24px;
+            display: none;
             overflow: hidden;
+        }
+
+        .verification-banner {
+            background: linear-gradient(90deg, var(--deep), var(--blue));
+            color: #fff;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .verification-banner h3 {
+            font-size: 1.15rem;
+            text-transform: uppercase;
+        }
+
+        .verification-banner p {
+            color: #d9ecff;
+            font-weight: 700;
+            margin-top: 4px;
         }
 
         .result-head {
             align-items: center;
-            background: #ecfeff;
-            border-bottom: 1px solid #cffafe;
+            background: #eaf6ff;
+            border-bottom: 1px solid var(--line);
             display: flex;
             justify-content: space-between;
-            padding: 18px 22px;
+            padding: 15px 18px;
         }
 
         .result-head h3 {
-            color: #164e63;
-            font-size: 1.25rem;
+            color: var(--deep);
         }
 
         .status {
             border-radius: 999px;
-            font-weight: 800;
-            padding: 7px 14px;
+            font-weight: 900;
+            padding: 6px 13px;
         }
 
         .status.pass {
@@ -240,45 +625,62 @@
             color: #991b1b;
         }
 
-        .details-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-        }
-
         .student-summary {
             align-items: center;
-            border-bottom: 1px solid #edf2f7;
             display: flex;
-            gap: 18px;
-            padding: 20px 22px;
+            gap: 16px;
+            padding: 18px;
         }
 
         .student-photo {
             background: #e2e8f0;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
-            height: 116px;
+            height: 112px;
             object-fit: cover;
-            width: 96px;
+            width: 92px;
         }
 
         .summary-text span {
-            color: #667085;
+            color: var(--muted);
             display: block;
             font-size: 0.9rem;
         }
 
         .summary-text strong {
-            color: #0f172a;
+            color: var(--deep);
             display: block;
             font-size: 1.35rem;
-            line-height: 1.3;
-            margin-top: 3px;
+        }
+
+        .candidate-table {
+            border-collapse: collapse;
+            margin: 0 18px 18px;
+            width: calc(100% - 36px);
+        }
+
+        .candidate-table th,
+        .candidate-table td {
+            border: 1px solid #dfe7f0;
+            padding: 11px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .candidate-table th {
+            background: #f4f8fc;
+            color: var(--deep);
+            width: 34%;
+        }
+
+        .candidate-table td {
+            color: var(--ink);
+            font-weight: 800;
         }
 
         .detail {
-            border-bottom: 1px solid #edf2f7;
-            padding: 16px 22px;
+            border-top: 1px solid #edf2f7;
+            padding: 14px 18px;
         }
 
         .detail:nth-child(odd) {
@@ -286,15 +688,13 @@
         }
 
         .detail span {
-            color: #667085;
+            color: var(--muted);
             display: block;
-            font-size: 0.85rem;
-            margin-bottom: 4px;
+            font-size: 0.84rem;
         }
 
         .detail strong {
-            color: #101828;
-            font-size: 1.02rem;
+            color: var(--ink);
         }
 
         .empty {
@@ -303,202 +703,504 @@
             border-radius: 8px;
             color: #9a3412;
             display: none;
-            margin-top: 20px;
-            padding: 16px 18px;
+            margin-top: 14px;
+            padding: 14px 16px;
         }
 
-        footer {
-            background: #0f172a;
-            color: #cbd5e1;
-            padding: 24px 20px;
+        .verification-note {
+            background: #ecfdf5;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            color: #166534;
+            font-weight: 800;
+            margin-top: 14px;
+            padding: 12px 14px;
+        }
+
+        .verification-note {
+            margin: 0 18px 18px;
+        }
+
+        .footer {
+            background: #071f39;
+            color: #cdd9e7;
+            padding: 34px 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: 1.2fr repeat(3, 1fr);
+        }
+
+        .footer h3 {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .footer ul {
+            list-style: none;
+        }
+
+        .footer li {
+            margin-bottom: 8px;
+        }
+
+        .copyright {
+            background: #041426;
+            color: #b9c7d6;
+            margin-top: 28px;
+            padding: 14px 0;
             text-align: center;
         }
 
-        @media (max-width: 820px) {
-            .header-inner,
+        @media (max-width: 980px) {
+            .quick-grid,
+            .awards-grid,
+            .courses-grid,
+            .updates-grid,
+            .course-tools,
+            .association-strip {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-grid,
+            .about-grid,
+            .verify-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .topbar .wrap,
+            .brand-row,
             .result-head {
                 align-items: flex-start;
                 flex-direction: column;
             }
 
-            .hero {
-                grid-template-columns: 1fr;
+            .iso-box {
+                width: 100%;
             }
 
-            .search-panel {
-                border-left: 0;
-                border-top: 1px solid #d9e2ec;
+            .nav-row a {
+                flex: 1 1 50%;
+                text-align: center;
             }
 
-            .quick-stats,
+            .quick-grid,
+            .feature-list,
+            .awards-grid,
+            .courses-grid,
+            .updates-grid,
+            .course-tools,
+            .association-strip,
             .details-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .student-summary {
-                align-items: flex-start;
-            }
-
-            .detail:nth-child(odd) {
-                border-right: 0;
             }
 
             .search-row {
                 flex-direction: column;
             }
+
+            .field-grid,
+            .verify-help-grid,
+            .verification-stamp {
+                grid-template-columns: 1fr;
+            }
+
+            .detail:nth-child(odd) {
+                border-right: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-inner">
-            <div class="brand">
-                <h1>Education Support & Development Program</h1>
-                <p>इएसडीपी छात्र परिणाम एवं प्रशिक्षण रिकॉर्ड पोर्टल</p>
+    <div class="topbar">
+        <div class="wrap">
+            <div>info@esdp.org.in &nbsp; | &nbsp; Helpline: 1800 000 7878</div>
+            <div class="top-links">
+                <a href="#verify">Verify Student</a>
+                <a href="#admission">Apply Online</a>
+                <a href="#login">Centre Login</a>
             </div>
-            <div class="badge">ESDP Record Portal</div>
+        </div>
+    </div>
+
+    <header class="brand-row wrap">
+        <div class="logo-mark">ESDP</div>
+        <div class="brand-title">
+            <h1>Education & Skill Development Program</h1>
+            <p>An autonomous educational initiative for vocational training, skills certification and career support</p>
+        </div>
+        <div class="iso-box">
+            Student Record<br>Verification Portal
         </div>
     </header>
 
+    <nav>
+        <div class="nav-row wrap">
+            <a href="#">Home</a>
+            <a href="#about">The Council</a>
+            <a href="#courses">Courses</a>
+            <a href="#verify">Student Zone</a>
+            <a href="#centres">Affiliation Franchise</a>
+            <a href="#updates">News & Updates</a>
+            <a href="#contact">Contact Us</a>
+        </div>
+    </nav>
+
+    <div class="quick-panel">
+        <div class="quick-grid wrap">
+            <a href="#verify">Certificate Verification</a>
+            <a href="#admission">Apply Admission</a>
+            <a href="#courses">Offered Courses</a>
+            <a href="#centres">Search Centre</a>
+            <a href="#downloads">Prospectus</a>
+            <a href="#contact">Help Desk</a>
+        </div>
+    </div>
+
+    <div class="ticker">
+        <span>ALERT: Students are advised to verify admission, certificate and centre details only through the official ESDP portal. Beware of fake promises and unauthorized agents.</span>
+    </div>
+
     <main>
         <section class="hero">
-            <div class="hero-text">
-                <h2>रोल नंबर से छात्र की जानकारी देखें</h2>
-                <div class="quick-stats">
-                    <div class="stat">
-                        <strong id="totalStudents">0</strong>
-                        <span>कुल रिकॉर्ड</span>
-                    </div>
-                    <div class="stat">
-                        <strong id="passStudents">0</strong>
-                        <span>पास छात्र</span>
-                    </div>
-                    <div class="stat">
-                        <strong id="failStudents">0</strong>
-                        <span>फेल छात्र</span>
+            <div class="hero-grid wrap">
+                <div class="hero-copy">
+                    <h2>Official Website of ESDP Council</h2>
+                    <p>Skill education, vocational training, online verification, centre support and placement-oriented learning programs for youth, women and working learners.</p>
+                    <div class="hero-actions">
+                        <a class="btn gold" href="#verify">Verify Student Record</a>
+                        <a class="btn light" href="#courses">Explore Courses</a>
                     </div>
                 </div>
-                <img
-                    class="vocational-photo"
-                    src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=900&q=85"
-                    alt="Vocational training students"
-                >
-            </div>
-
-            <div class="search-panel">
-                <h3>Student Record Search</h3>
-                <form id="searchForm">
-                    <label for="rollInput">रोल नंबर लिखें</label>
-                    <div class="search-row">
-                        <input id="rollInput" type="text" placeholder="जैसे ESDP2026-001" autocomplete="off">
-                        <button type="submit">Search</button>
-                    </div>
-                </form>
-                <p class="hint">Demo roll numbers: ESDP2026-001, ESDP2026-002, ESDP2022-001</p>
-                <p class="hint">रिकॉर्ड देखने के लिए सही रोल नंबर जरूरी है.</p>
-                <a class="website-link" href="https://singular-profiterole-dcb667.netlify.app/">https://singular-profiterole-dcb667.netlify.app/</a>
+                <aside class="notice-board" id="updates">
+                    <h3>Update Headlines</h3>
+                    <ul class="notice-list">
+                        <li><strong>Admission Notification</strong> May 2026 batch admission and online payment link available.</li>
+                        <li><strong>Exam Notification</strong> Eligible candidate data required from all authorized centres.</li>
+                        <li><strong>Result Update</strong> Student result records can be checked through roll number.</li>
+                        <li><strong>Centre Renewal</strong> Renewal process for academic session 2026-27 is open.</li>
+                    </ul>
+                </aside>
             </div>
         </section>
 
-        <div class="empty" id="emptyMessage">इस रोल नंबर का रिकॉर्ड नहीं मिला. कृपया रोल नंबर दोबारा जांचें.</div>
+        <section id="about">
+            <div class="wrap about-grid">
+                <article class="about-card">
+                    <h2 class="section-title">Welcome to Official Website</h2>
+                    <p class="section-lead">ESDP works for educational development, skill-based certification and vocational training support. The program focuses on practical learning, online records, centre coordination and career readiness.</p>
+                    <p>Our purpose is to provide accessible training support for learners from urban and rural areas through structured courses, transparent records and centre-based guidance. ESDP promotes employable skills, digital learning, entrepreneurship and continued education pathways.</p>
+                    <ul class="feature-list">
+                        <li>Online Verification</li>
+                        <li>Placement Assistance</li>
+                        <li>Vocational Courses</li>
+                        <li>Study Material Support</li>
+                        <li>Centre Network</li>
+                        <li>Digital Learning</li>
+                    </ul>
+                </article>
 
-        <section class="result-card" id="resultCard" aria-live="polite">
-            <div class="result-head">
-                <h3 id="resultTitle">Student Details</h3>
-                <span class="status pass" id="resultStatus">PASS</span>
+                <aside class="director-card">
+                    <img src="https://images.unsplash.com/photo-1573497491208-6b1acb260507?auto=format&fit=crop&w=900&q=82" alt="Education leadership desk">
+                    <div class="director-body">
+                        <h3>From the Desk of Director</h3>
+                        <p>Education becomes meaningful when it creates confidence, skill and dignity. ESDP is committed to transparent student services and career-focused training.</p>
+                    </div>
+                </aside>
             </div>
-            <div class="student-summary">
-                <img class="student-photo" id="studentPhoto" src="rahul-varma-photo.svg" alt="Student photo">
-                <div class="summary-text">
-                    <span>Student Photo & Record</span>
-                    <strong id="summaryName"></strong>
-                </div>
-            </div>
-            <div class="details-grid">
-                <div class="detail">
-                    <span>रोल नंबर</span>
-                    <strong id="rollNumber"></strong>
-                </div>
-                <div class="detail">
-                    <span>छात्र का नाम</span>
-                    <strong id="studentName"></strong>
-                </div>
-                <div class="detail">
-                    <span>पिता का नाम</span>
-                    <strong id="fatherName"></strong>
-                </div>
-                <div class="detail">
-                    <span>ट्रेड का नाम</span>
-                    <strong id="tradeName"></strong>
-                </div>
-                <div class="detail">
-                    <span>सेंटर का नाम</span>
-                    <strong id="centerName"></strong>
-                </div>
-                <div class="detail">
-                    <span>उत्तीर्ण वर्ष</span>
-                    <strong id="passingYear"></strong>
+        </section>
+
+        <section class="association">
+            <div class="wrap">
+                <h2 class="section-title">In Association With</h2>
+                <div class="association-strip">
+                    <div>ESDP Skill Academy</div>
+                    <div>ESDP Education Council</div>
+                    <div>ESDP Digital Learning</div>
+                    <div>ESDP Career Support</div>
                 </div>
             </div>
         </section>
 
+        <section>
+            <div class="wrap">
+                <h2 class="section-title">Achievements & Recognition</h2>
+                <p class="section-lead">Institutional milestones, training participation and community education initiatives.</p>
+                <div class="awards-grid">
+                    <article class="award-card">
+                        <img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=700&q=82" alt="Students in seminar hall">
+                        <div><h3>Skill Development Drives</h3><p>Training awareness camps for career-focused learning.</p></div>
+                    </article>
+                    <article class="award-card">
+                        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=700&q=82" alt="Training discussion">
+                        <div><h3>Centre Support Network</h3><p>Operational support for authorized learning centres.</p></div>
+                    </article>
+                    <article class="award-card">
+                        <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=700&q=82" alt="Education workshop">
+                        <div><h3>Workshops & Events</h3><p>Regular academic and placement-oriented sessions.</p></div>
+                    </article>
+                    <article class="award-card">
+                        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=700&q=82" alt="Modern training classroom">
+                        <div><h3>Digital Records</h3><p>Roll-number based student record verification.</p></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="wrap stats-grid">
+                <div class="stat"><strong>12+</strong><span>Years of Service</span></div>
+                <div class="stat"><strong>13500+</strong><span>Satisfied Students</span></div>
+                <div class="stat"><strong>425+</strong><span>Training Centres</span></div>
+                <div class="stat"><strong>85+</strong><span>Offered Courses</span></div>
+                <div class="stat"><strong>24x7</strong><span>Online Verification</span></div>
+            </div>
+        </section>
+
+        <section id="courses">
+            <div class="wrap">
+                <h2 class="section-title">Offered Courses</h2>
+                <p class="section-lead">ESDP learners के लिए academic, technical, vocational, healthcare, management और skill-based program categories.</p>
+                <div class="course-tools">
+                    <input id="courseSearch" type="text" placeholder="Course category search करें, जैसे computer, healthcare, hotel, teaching">
+                    <div class="course-total">6743+ Courses</div>
+                </div>
+                <div class="courses-grid" id="courseGrid">
+                    <article class="course-card" data-course="hotel management goa india"><div class="course-code">DHM - INDIA</div><h3>Diploma In Hotel Management - Goa</h3><p>Hospitality operations, guest service and hotel management training.</p><div class="course-count">Diploma Program</div></article>
+                    <article class="course-card" data-course="hotel management international"><div class="course-code">DHM - INTERNATIONAL</div><h3>Diploma in Hotel Management - International</h3><p>International hospitality exposure with practical service skills.</p><div class="course-count">Diploma Program</div></article>
+                    <article class="course-card" data-course="bachelor hotel management international internship"><div class="course-code">BHM - INTERNATIONAL</div><h3>Bachelor in Hotel Management</h3><p>Three-year hotel management pathway with internship focus.</p><div class="course-count">Bachelor Program</div></article>
+                    <article class="course-card" data-course="computer science data science information technology"><div class="course-code">IT-COMPUTER</div><h3>Computer Science, Data Science & IT</h3><p>Computer fundamentals, data science, software and digital technology.</p><div class="course-count">258 Courses</div></article>
+                    <article class="course-card" data-course="vocational programs"><div class="course-code">VOCATIONAL</div><h3>Vocational Programs</h3><p>Job-oriented practical skill courses for livelihood and employment.</p><div class="course-count">58 Courses</div></article>
+                    <article class="course-card" data-course="business administration management"><div class="course-code">BUSINESS ADMIN</div><h3>Business Administration & Management</h3><p>Office, retail, management, leadership and enterprise operations.</p><div class="course-count">289 Courses</div></article>
+                    <article class="course-card" data-course="social empowerment development peace rights livelihood welfare"><div class="course-code">LIVELIHOODS</div><h3>Social Empowerment & Livelihoods</h3><p>Community development, social work and welfare-oriented learning.</p><div class="course-count">95 Courses</div></article>
+                    <article class="course-card" data-course="library information science"><div class="course-code">LIBRARY COURSES</div><h3>Library & Information Science</h3><p>Library management, documentation and information services.</p><div class="course-count">12 Courses</div></article>
+                    <article class="course-card" data-course="engineering technology"><div class="course-code">ENGINEERING</div><h3>Engineering & Technology</h3><p>Technical trades, maintenance, repair and engineering skill programs.</p><div class="course-count">310 Courses</div></article>
+                    <article class="course-card" data-course="yoga sports physical education"><div class="course-code">YOGA AND SPORTS</div><h3>Yoga, Sports & Physical Education</h3><p>Fitness, physical education, yoga and sports training categories.</p><div class="course-count">63 Courses</div></article>
+                    <article class="course-card" data-course="journalism mass communication"><div class="course-code">JOURNALISM</div><h3>Journalism & Mass Communication</h3><p>Media, reporting, communication and public information training.</p><div class="course-count">88 Courses</div></article>
+                    <article class="course-card" data-course="agriculture aquaculture forestry husbandry water management"><div class="course-code">AGRICULTURE</div><h3>Agriculture, Aquaculture & Forestry</h3><p>Rural livelihood, farming, animal care and natural resource skills.</p><div class="course-count">116 Courses</div></article>
+                    <article class="course-card" data-course="textiles garments jewelry fashion design"><div class="course-code">FASHION DESIGN</div><h3>Textiles, Garments, Jewelry & Fashion</h3><p>Design, garment construction, fashion and creative production skills.</p><div class="course-count">173 Courses</div></article>
+                    <article class="course-card" data-course="beauty care wellness hair art"><div class="course-code">BEAUTY AND WELLNESS</div><h3>Beauty Care, Wellness & Hair Art</h3><p>Salon, grooming, wellness and self-employment oriented training.</p><div class="course-count">50 Courses</div></article>
+                    <article class="course-card" data-course="bpo call center"><div class="course-code">BPO - CALL CENTER</div><h3>BPO & Call Center Programs</h3><p>Customer support, voice process and office communication training.</p><div class="course-count">10 Courses</div></article>
+                    <article class="course-card" data-course="painting arts crafts"><div class="course-code">ART AND CRAFT</div><h3>Painting Arts & Crafts</h3><p>Fine art, craft, creative skills and handmade product learning.</p><div class="course-count">21 Courses</div></article>
+                    <article class="course-card" data-course="aviation hospitality aircraft"><div class="course-code">AVIATION</div><h3>Aviation, Hospitality & Aircraft</h3><p>Aviation support, cabin service and airport hospitality basics.</p><div class="course-count">52 Courses</div></article>
+                    <article class="course-card" data-course="food safety production supply"><div class="course-code">FOOD SAFETY</div><h3>Food Safety, Production & Supply</h3><p>Food handling, processing, hygiene and supply chain training.</p><div class="course-count">101 Courses</div></article>
+                    <article class="course-card" data-course="mobile phone telecommunication technologies"><div class="course-code">MOBILE TECH</div><h3>Mobile Phone & Telecommunication</h3><p>Mobile repair, telecom basics and communication technologies.</p><div class="course-count">19 Courses</div></article>
+                    <article class="course-card" data-course="hotel hospitality management"><div class="course-code">HOSPITALITY</div><h3>Hotel & Hospitality Management</h3><p>Hotel operations, front office, housekeeping and service training.</p><div class="course-count">52 Courses</div></article>
+                    <article class="course-card" data-course="tourism travels transportation"><div class="course-code">TOURISM</div><h3>Tourism, Travels & Transportation</h3><p>Travel support, tourism services and transport operations.</p><div class="course-count">43 Courses</div></article>
+                    <article class="course-card" data-course="community health services essential aid"><div class="course-code">COMMUNITY HEALTH</div><h3>Community Health Services & Essential Aid</h3><p>Community care, basic health support and essential aid skills.</p><div class="course-count">64 Courses</div></article>
+                    <article class="course-card" data-course="health care medical sciences"><div class="course-code">HEALTHCARE</div><h3>Health Care & Medical Sciences</h3><p>Healthcare support, medical assistance and allied health categories.</p><div class="course-count">316 Courses</div></article>
+                    <article class="course-card" data-course="naturopathy ayurveda sciences"><div class="course-code">NATUROPATHY</div><h3>Naturopathy & Ayurveda Sciences</h3><p>Traditional wellness, natural care and Ayurveda-oriented programs.</p><div class="course-count">49 Courses</div></article>
+                    <article class="course-card" data-course="nursery primary teacher training"><div class="course-code">NURSERY TEACHER</div><h3>Nursery & Primary Teacher Training</h3><p>Early classroom support, child learning and primary teaching skills.</p><div class="course-count">21 Courses</div></article>
+                    <article class="course-card" data-course="early childhood nanny care childcare"><div class="course-code">CHILDCARE</div><h3>Early Childhood & Nanny Care</h3><p>Childcare, early development and home care support skills.</p><div class="course-count">34 Courses</div></article>
+                    <article class="course-card" data-course="education teaching"><div class="course-code">TEACHING</div><h3>Education & Teaching</h3><p>Teaching support, education practice and classroom learning methods.</p><div class="course-count">41 Courses</div></article>
+                    <article class="course-card" data-course="fire safety"><div class="course-code">FIRE-SAFETY</div><h3>Fire & Safety</h3><p>Fire safety awareness, industrial safety and emergency support.</p><div class="course-count">58 Courses</div></article>
+                    <article class="course-card" data-course="veterinary science"><div class="course-code">VETERINARY</div><h3>Veterinary Science</h3><p>Animal health support and veterinary assistance categories.</p><div class="course-count">15 Courses</div></article>
+                    <article class="course-card" data-course="soft skills development"><div class="course-code">SOFT SKILLS</div><h3>Soft Skills Development</h3><p>Communication, personality, workplace readiness and confidence.</p><div class="course-count">28 Courses</div></article>
+                    <article class="course-card" data-course="english spoken"><div class="course-code">ENGLISH SPOKEN</div><h3>English Spoken</h3><p>Spoken English, interview basics and daily communication practice.</p><div class="course-count">21 Courses</div></article>
+                    <article class="course-card" data-course="justice law legal studies"><div class="course-code">LAW AND JUSTICE</div><h3>Justice, Law & Legal Studies</h3><p>Legal awareness, documentation and justice-related study areas.</p><div class="course-count">115 Courses</div></article>
+                    <article class="course-card" data-course="science studies"><div class="course-code">SCIENCE STUDIES</div><h3>Science Studies</h3><p>Science-oriented academic and applied learning programs.</p><div class="course-count">43 Courses</div></article>
+                    <article class="course-card" data-course="culture literature arts education"><div class="course-code">CULTURE - ARTS</div><h3>Culture, Literature & Arts Education</h3><p>Culture, literature, theatre, arts and creative education categories.</p><div class="course-count">56 Courses</div></article>
+                    <article class="course-card" data-course="designing graphics multimedia animation gaming"><div class="course-code">GRAPHICS DESIGN</div><h3>Designing, Graphics, Multimedia & Gaming</h3><p>Creative design, animation, multimedia and game design basics.</p><div class="course-count">110 Courses</div></article>
+                    <article class="course-card" data-course="marketing advertising public relations"><div class="course-code">PR MARKETING</div><h3>Marketing, Advertising & Public Relations</h3><p>Promotion, branding, sales communication and PR skills.</p><div class="course-count">81 Courses</div></article>
+                    <article class="course-card" data-course="nursing midwifery"><div class="course-code">MIDWIFERY</div><h3>Nursing & Midwifery</h3><p>Nursing assistance and maternal care support categories.</p><div class="course-count">33 Courses</div></article>
+                    <article class="course-card" data-course="entertainment performing arts audio visual shooting"><div class="course-code">PERFORMING</div><h3>Entertainment, Performing Arts & Audio-Visual</h3><p>Stage, performance, content production and AV support training.</p><div class="course-count">208 Courses</div></article>
+                    <article class="course-card" data-course="international languages"><div class="course-code">INTERNATIONAL</div><h3>International Languages</h3><p>Foreign language learning and communication categories.</p><div class="course-count">90 Courses</div></article>
+                    <article class="course-card" data-course="german language programs"><div class="course-code">GERMAN LANGUAGE</div><h3>German Language Programs</h3><p>German language basics and applied communication training.</p><div class="course-count">5 Courses</div></article>
+                    <article class="course-card" data-course="security intelligence services"><div class="course-code">SECURITY</div><h3>Security & Intelligence Services</h3><p>Security services, guard training and basic intelligence support.</p><div class="course-count">18 Courses</div></article>
+                    <article class="course-card" data-course="astrology numerology"><div class="course-code">ASTROLOGY</div><h3>Astrology & Numerology</h3><p>Astrology, numerology and traditional advisory categories.</p><div class="course-count">23 Courses</div></article>
+                    <article class="course-card" data-course="counseling guidance"><div class="course-code">COUNSELING</div><h3>Counseling & Guidance</h3><p>Career guidance, counseling basics and student support learning.</p><div class="course-count">21 Courses</div></article>
+                    <article class="course-card" data-course="solar energy system"><div class="course-code">SOLAR ENERGY</div><h3>Solar Energy System</h3><p>Solar installation, maintenance and renewable energy basics.</p><div class="course-count">3 Courses</div></article>
+                    <article class="course-card" data-course="furnishing carpentry"><div class="course-code">CARPENTRY</div><h3>Furnishing & Carpentry</h3><p>Furniture, woodwork and carpentry-oriented practical skills.</p><div class="course-count">13 Courses</div></article>
+                    <article class="course-card" data-course="footwear technology"><div class="course-code">FOOTWEAR TECH</div><h3>Footwear Technology</h3><p>Footwear production, repair and design-oriented training.</p><div class="course-count">11 Courses</div></article>
+                    <article class="course-card" data-course="construction supervision"><div class="course-code">CONSTRUCTION</div><h3>Construction & Supervision</h3><p>Construction site support, supervision and field operation basics.</p><div class="course-count">14 Courses</div></article>
+                    <article class="course-card" data-course="anganwadi balwadi childcare"><div class="course-code">ANGANWADI</div><h3>Anganwadi & Balwadi Childcare</h3><p>Community childcare and early learning support programs.</p><div class="course-count">2 Courses</div></article>
+                    <article class="course-card" data-course="pre school learning kids teens"><div class="course-code">PRE SCHOOL</div><h3>Pre School Learning Programs</h3><p>Learning programs for kids, teens and early foundation support.</p><div class="course-count">6 Courses</div></article>
+                    <article class="course-card" data-course="land survey geographic information system remote sensing"><div class="course-code">REMOTE SENSING</div><h3>Land Survey, GIS & Remote Sensing</h3><p>Surveying, mapping, GIS and remote sensing training categories.</p><div class="course-count">18 Courses</div></article>
+                    <article class="course-card" data-course="translation studies training"><div class="course-code">TRANSLATION</div><h3>Translation Studies & Training</h3><p>Translation, language support and documentation skills.</p><div class="course-count">9 Courses</div></article>
+                    <article class="course-card" data-course="accounting commerce insurance banking inventory capital management"><div class="course-code">ACCOUNTANCY</div><h3>Accounting, Commerce, Insurance & Banking</h3><p>Accounts, finance, banking, inventory and commerce skills.</p><div class="course-count">162 Courses</div></article>
+                    <article class="course-card" data-course="plastic processing technologies"><div class="course-code">PLASTIC TECH</div><h3>Plastic Processing Technologies</h3><p>Plastic processing, manufacturing support and material handling.</p><div class="course-count">7 Courses</div></article>
+                    <article class="course-card" data-course="foundryman training"><div class="course-code">FOUNDRYMAN</div><h3>Foundryman Training</h3><p>Foundry work, casting support and industrial process basics.</p><div class="course-count">2 Courses</div></article>
+                    <article class="course-card" data-course="lift escalator mechanism technology"><div class="course-code">LIFT - ESCALATOR</div><h3>Lift & Escalator Mechanism Technology</h3><p>Lift systems, escalator mechanism and maintenance support.</p><div class="course-count">4 Courses</div></article>
+                    <article class="course-card" data-course="drone operating technology"><div class="course-code">DRONE TECH</div><h3>Drone Operating & Drone Technology</h3><p>Drone handling, operation, safety and applied technology skills.</p><div class="course-count">15 Courses</div></article>
+                    <article class="course-card" data-course="rubber technologies training"><div class="course-code">RUBBER TECH</div><h3>Rubber Technologies Training</h3><p>Rubber processing and industrial material training.</p><div class="course-count">1 Course</div></article>
+                    <article class="course-card" data-course="mining machinery stone processing"><div class="course-code">STONE PROCESSING</div><h3>Mining Machinery & Stone Processing</h3><p>Mining support, stone processing and machinery basics.</p><div class="course-count">8 Courses</div></article>
+                    <article class="course-card" data-course="free computer unpaid courses"><div class="course-code">UNPAID COURSES</div><h3>Free Computer Courses</h3><p>Digital literacy and community computer education projects.</p><div class="course-count">3 Courses</div></article>
+                    <article class="course-card" data-course="programming applications software website development design"><div class="course-code">WEB-SOFTWARE</div><h3>Programming, Applications, Software & Website</h3><p>Programming, app, software, web development and design skills.</p><div class="course-count">73 Courses</div></article>
+                    <article class="course-card" data-course="homeopathy"><div class="course-code">HOMEOPATHY</div><h3>Homeopathy</h3><p>Homeopathy-oriented awareness and support learning categories.</p><div class="course-count">7 Courses</div></article>
+                    <article class="course-card" data-course="environmental education"><div class="course-code">ENVIRONMENTAL</div><h3>Environmental Education</h3><p>Environment, conservation and sustainability education categories.</p><div class="course-count">13 Courses</div></article>
+                    <article class="course-card" data-course="housekeeping accommodation services"><div class="course-code">HOUSEKEEPING</div><h3>Housekeeping & Accommodation Services</h3><p>Housekeeping, accommodation, facility and guest room operations.</p><div class="course-count">12 Courses</div></article>
+                    <article class="course-card" data-course="laboratory radiology operation theatre technician"><div class="course-code">LAB-OT TECHNICIAN</div><h3>Laboratory, Radiology & Operation Theatre</h3><p>Lab, radiology and operation theatre support categories.</p><div class="course-count">85 Courses</div></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="verify-section" id="verify">
+            <div class="wrap verify-grid">
+                <div class="verify-box">
+                    <h2 class="section-title">Online Verification</h2>
+                    <p class="section-lead">Candidate का enrolment / registration number डालकर record verify करें।</p>
+
+                    <form class="verify-form-card" id="searchForm">
+                        <h3>Online Verification</h3>
+                        <label for="rollInput">Enrolment / Reg. No.</label>
+                        <div class="search-row">
+                            <input id="rollInput" type="text" placeholder="Enter Enrolment / Reg. No." autocomplete="off">
+                            <button class="btn" type="submit">Search</button>
+                        </div>
+                        <small>Demo: ESDP1801222107MP या ESDP2026-001</small>
+                    </form>
+
+                    <div class="empty" id="emptyMessage">इस roll number का record नहीं मिला। कृपया roll number दोबारा जांचें।</div>
+                </div>
+
+                <section class="result-card" id="resultCard" aria-live="polite">
+                    <div class="verification-banner">
+                        <h3>ESDP Online Student Verification</h3>
+                        <p>Search result generated from candidate registration number</p>
+                    </div>
+                    <div class="result-head">
+                        <h3 id="resultTitle">Online Verification Details</h3>
+                        <span class="status pass" id="resultStatus">PASS</span>
+                    </div>
+                    <div class="student-summary">
+                        <img class="student-photo" id="studentPhoto" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&q=80" alt="Student photo">
+                        <div class="summary-text">
+                            <span>Verified Candidate Record</span>
+                            <strong id="summaryName"></strong>
+                        </div>
+                    </div>
+                    <table class="candidate-table" aria-label="Verified candidate information">
+                        <tbody>
+                            <tr><th>Candidate Name</th><td id="tableName"></td></tr>
+                            <tr><th>Father's Name</th><td id="tableFather"></td></tr>
+                            <tr><th>Date of Birth</th><td id="tableDob"></td></tr>
+                            <tr><th>Enrolment / Reg. No.</th><td id="tableRegNo"></td></tr>
+                            <tr><th>Passing Year</th><td id="tableSession"></td></tr>
+                            <tr><th>Course Status</th><td id="tableStatus"></td></tr>
+                            <tr><th>Course Name</th><td id="tableCourse"></td></tr>
+                            <tr><th>Course Duration</th><td id="tableDuration"></td></tr>
+                            <tr><th>Accadmic Center</th><td id="tableCentre"></td></tr>
+                        </tbody>
+                    </table>
+                    <div class="verification-note">Record verified successfully from ESDP online verification portal.</div>
+                </section>
+            </div>
+        </section>
+
+        <section id="centres">
+            <div class="wrap">
+                <h2 class="section-title">Affiliation Franchise</h2>
+                <p class="section-lead">ESDP centre partnership model supports training delivery, student registration, digital verification and local skill development activities.</p>
+                <div class="updates-grid">
+                    <article class="update-card"><h3>Authorized Centres</h3><p>Search and verify nearby training centres before admission.</p></article>
+                    <article class="update-card"><h3>Centre Procedures</h3><p>Guidelines for documentation, admission and training operations.</p></article>
+                    <article class="update-card"><h3>Apply Franchise</h3><p>Interested institutions can apply for centre partnership.</p></article>
+                    <article class="update-card"><h3>Coordinator Partnership</h3><p>District and regional coordination opportunities.</p></article>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <p>&copy; 2026 Education Support & Development Program | Student Result Record</p>
+    <footer class="footer" id="contact">
+        <div class="wrap footer-grid">
+            <div>
+                <h3>ESDP Council</h3>
+                <p>Education & Skill Development Program provides vocational education support, digital student verification and training centre coordination.</p>
+            </div>
+            <div>
+                <h3>Student Zone</h3>
+                <ul>
+                    <li><a href="#verify">Online Verification</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#updates">Exam Updates</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Important Links</h3>
+                <ul>
+                    <li><a href="#admission">Apply Admission</a></li>
+                    <li><a href="#centres">Apply Franchise</a></li>
+                    <li><a href="#downloads">Downloads</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Contact</h3>
+                <ul>
+                    <li>info@esdp.org.in</li>
+                    <li>Helpline: 1800 000 7878</li>
+                    <li>Office Hours: 10 AM - 5 PM</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="wrap">&copy; 2026 Education & Skill Development Program. All Rights Reserved.</div>
+        </div>
     </footer>
 
     <script>
         const students = [
             {
                 roll: "ESDP2026-001",
+                regNo: "ESDP1801222107MP",
                 name: "Rahul Varma",
                 father: "Mohan Varma",
-                trade: "IT / कंप्यूटर",
-                center: "ESDP सेंटर छिंदवाड़ा",
+                dob: "15 Jan 2004",
+                trade: "IT / Computer",
+                center: "ESDP Centre Chhindwara",
                 year: "2026",
                 result: "PASS",
-                photo: "rahul-varma-photo.svg"
+                duration: "12 Months",
+                photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&q=80"
             },
             {
                 roll: "ESDP2026-002",
+                regNo: "ESDP1801222108MP",
                 name: "Pooja Sahu",
                 father: "Rajesh Sahu",
-                trade: "ब्यूटी एंड वेलनेस",
-                center: "ESDP सेंटर बालाघाट",
+                dob: "22 Aug 2003",
+                trade: "Beauty & Wellness",
+                center: "ESDP Centre Balaghat",
                 year: "2026",
                 result: "PASS",
-                photo: ""
+                duration: "12 Months",
+                photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&q=80"
             },
             {
                 roll: "ESDP2024-001",
+                regNo: "ESDP1801222109MP",
                 name: "Aman Thakur",
                 father: "Suresh Thakur",
-                trade: "एग्रीकल्चर",
-                center: "ESDP सेंटर सिवनी",
+                dob: "09 Feb 2002",
+                trade: "Agriculture",
+                center: "ESDP Centre Seoni",
                 year: "2024",
                 result: "FAIL",
-                photo: ""
-            },
-            {
-                roll: "ESDP2030-001",
-                name: "Neha Pawar",
-                father: "Dinesh Pawar",
-                trade: "हेल्थकेयर",
-                center: "ESDP सेंटर बैतूल",
-                year: "2030",
-                result: "PASS",
-                photo: ""
+                duration: "12 Months",
+                photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=240&q=80"
             },
             {
                 roll: "ESDP2022-001",
+                regNo: "ESDP1801222110MP",
                 name: "Ravi Patel",
                 father: "Mahesh Patel",
-                trade: "IT / कंप्यूटर",
-                center: "ESDP सेंटर छिंदवाड़ा",
+                dob: "18 Jul 2001",
+                trade: "IT / Computer",
+                center: "ESDP Centre Chhindwara",
                 year: "2022",
                 result: "PASS",
-                photo: ""
+                duration: "12 Months",
+                photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=240&q=80"
             }
         ];
 
@@ -507,26 +1209,24 @@
         const rollInput = document.getElementById("rollInput");
         const resultStatus = document.getElementById("resultStatus");
         const studentPhoto = document.getElementById("studentPhoto");
-
-        function fillStats() {
-            document.getElementById("totalStudents").textContent = students.length;
-            document.getElementById("passStudents").textContent = students.filter(student => student.result === "PASS").length;
-            document.getElementById("failStudents").textContent = students.filter(student => student.result === "FAIL").length;
-        }
+        const courseSearch = document.getElementById("courseSearch");
 
         function showStudent(student) {
-            document.getElementById("resultTitle").textContent = `${student.name} का रिकॉर्ड`;
+            document.getElementById("resultTitle").textContent = "Online Verification Details";
             document.getElementById("summaryName").textContent = student.name;
-            document.getElementById("rollNumber").textContent = student.roll;
-            document.getElementById("studentName").textContent = student.name;
-            document.getElementById("fatherName").textContent = student.father;
-            document.getElementById("tradeName").textContent = student.trade;
-            document.getElementById("centerName").textContent = student.center;
-            document.getElementById("passingYear").textContent = student.year;
-            studentPhoto.src = student.photo || "student-photo-placeholder.svg";
+            studentPhoto.src = student.photo;
             studentPhoto.alt = `${student.name} photo`;
             resultStatus.textContent = student.result;
             resultStatus.className = `status ${student.result === "PASS" ? "pass" : "fail"}`;
+            document.getElementById("tableName").textContent = student.name;
+            document.getElementById("tableFather").textContent = student.father;
+            document.getElementById("tableDob").textContent = student.dob;
+            document.getElementById("tableRegNo").textContent = student.regNo || student.roll;
+            document.getElementById("tableSession").textContent = student.year;
+            document.getElementById("tableStatus").textContent = student.result;
+            document.getElementById("tableCourse").textContent = student.trade;
+            document.getElementById("tableDuration").textContent = student.duration;
+            document.getElementById("tableCentre").textContent = student.center;
             resultCard.style.display = "block";
             emptyMessage.style.display = "none";
         }
@@ -534,41 +1234,38 @@
         function searchStudent(event) {
             event.preventDefault();
             const roll = rollInput.value.trim().toUpperCase();
-            const student = students.find(item => item.roll.toUpperCase() === roll);
-
+            const student = students.find((item) => item.roll.toUpperCase() === roll || (item.regNo || "").toUpperCase() === roll);
             if (student) {
                 showStudent(student);
-                return;
+            } else {
+                resultCard.style.display = "none";
+                emptyMessage.style.display = "block";
             }
-
-            resultCard.style.display = "none";
-            emptyMessage.style.display = "block";
         }
-
-        document.getElementById("searchForm").addEventListener("submit", searchStudent);
 
         function openStudentFromLink() {
             const params = new URLSearchParams(window.location.search);
-            const roll = params.get("roll");
-
-            if (!roll) {
-                resultCard.style.display = "none";
-                return;
-            }
-
-            const student = students.find(item => item.roll.toUpperCase() === roll.trim().toUpperCase());
-
+            const roll = params.get("candidate_reg_no") || params.get("roll");
+            if (!roll) return;
+            const normalized = roll.trim().toUpperCase();
+            const student = students.find((item) => item.roll.toUpperCase() === normalized || (item.regNo || "").toUpperCase() === normalized);
             if (student) {
-                rollInput.value = student.roll;
+                rollInput.value = student.regNo || student.roll;
                 showStudent(student);
-                return;
+                document.getElementById("verify").scrollIntoView({ behavior: "smooth" });
+            } else {
+                emptyMessage.style.display = "block";
             }
-
-            resultCard.style.display = "none";
-            emptyMessage.style.display = "block";
         }
 
-        fillStats();
+        document.getElementById("searchForm").addEventListener("submit", searchStudent);
+        courseSearch.addEventListener("input", () => {
+            const query = courseSearch.value.trim().toLowerCase();
+            document.querySelectorAll(".course-card").forEach((card) => {
+                const text = `${card.textContent} ${card.dataset.course}`.toLowerCase();
+                card.style.display = text.includes(query) ? "flex" : "none";
+            });
+        });
         openStudentFromLink();
     </script>
 </body>

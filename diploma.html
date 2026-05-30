@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESDP Diploma Certificate</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #e8edf3;
+            color: #172033;
+            font-family: "Times New Roman", Georgia, serif;
+            padding: 24px;
+        }
+
+        .sheet {
+            background: #fff;
+            border: 12px solid #0b4f8a;
+            box-shadow: 0 16px 45px rgba(15, 23, 42, 0.18);
+            margin: 0 auto;
+            max-width: 1120px;
+            min-height: 780px;
+            padding: 18px;
+            position: relative;
+        }
+
+        .inner {
+            border: 3px solid #f5b301;
+            min-height: 720px;
+            padding: 28px 42px 34px;
+            position: relative;
+        }
+
+        .inner::before {
+            color: rgba(11, 79, 138, 0.07);
+            content: "ESDP";
+            font-family: Arial, sans-serif;
+            font-size: 9rem;
+            font-weight: 900;
+            left: 50%;
+            letter-spacing: 8px;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(-18deg);
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .top {
+            align-items: center;
+            display: grid;
+            gap: 18px;
+            grid-template-columns: 100px 1fr 120px;
+            text-align: center;
+        }
+
+        .logo {
+            align-items: center;
+            background: #0b4f8a;
+            border: 5px solid #d8ebff;
+            border-radius: 50%;
+            color: #fff;
+            display: flex;
+            font-family: Arial, sans-serif;
+            font-size: 1.35rem;
+            font-weight: 900;
+            height: 92px;
+            justify-content: center;
+            width: 92px;
+        }
+
+        h1 {
+            color: #0b4f8a;
+            font-family: Arial, sans-serif;
+            font-size: 2.15rem;
+            letter-spacing: 0;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            color: #4b5d73;
+            font-family: Arial, sans-serif;
+            font-size: 0.98rem;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .qr {
+            border: 1px solid #c8d5e4;
+            height: 104px;
+            object-fit: contain;
+            padding: 6px;
+            width: 104px;
+        }
+
+        .cert-title {
+            color: #b18200;
+            font-size: 2.7rem;
+            font-weight: 700;
+            margin: 42px 0 12px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .cert-subtitle {
+            color: #0b4f8a;
+            font-family: Arial, sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .body-text {
+            font-size: 1.35rem;
+            line-height: 1.9;
+            margin: 36px auto 0;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .name {
+            border-bottom: 2px solid #172033;
+            color: #0b4f8a;
+            display: inline-block;
+            font-size: 1.85rem;
+            font-weight: 800;
+            min-width: 420px;
+            padding: 0 18px 2px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .course {
+            color: #0f172a;
+            font-size: 1.45rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .details {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            margin: 34px 0;
+        }
+
+        .detail {
+            border: 1px solid #cfd9e5;
+            font-family: Arial, sans-serif;
+            padding: 10px;
+        }
+
+        .detail span {
+            color: #5f6f85;
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .detail strong {
+            color: #172033;
+            display: block;
+            font-size: 1rem;
+            margin-top: 3px;
+        }
+
+        .sign-row {
+            align-items: end;
+            display: grid;
+            gap: 30px;
+            grid-template-columns: repeat(3, 1fr);
+            margin-top: 48px;
+            text-align: center;
+        }
+
+        .sign-line {
+            border-top: 2px solid #172033;
+            font-family: Arial, sans-serif;
+            font-weight: 800;
+            padding-top: 8px;
+        }
+
+        .seal {
+            align-items: center;
+            border: 3px solid #b18200;
+            border-radius: 50%;
+            color: #0b4f8a;
+            display: flex;
+            font-family: Arial, sans-serif;
+            font-size: 0.95rem;
+            font-weight: 900;
+            height: 126px;
+            justify-content: center;
+            margin: auto;
+            text-align: center;
+            width: 126px;
+        }
+
+        .note {
+            color: #5f6f85;
+            font-family: Arial, sans-serif;
+            font-size: 0.82rem;
+            margin-top: 22px;
+            text-align: center;
+        }
+
+        .print {
+            margin: 18px auto 0;
+            max-width: 1120px;
+            text-align: right;
+        }
+
+        button {
+            background: #0b4f8a;
+            border: 0;
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 800;
+            padding: 11px 16px;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+
+            .sheet {
+                box-shadow: none;
+                max-width: none;
+                min-height: 100vh;
+            }
+
+            .print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="sheet">
+        <div class="inner">
+            <div class="content">
+                <header class="top">
+                    <div class="logo">ESDP</div>
+                    <div>
+                        <h1>Education & Skill Development Program</h1>
+                        <p class="subtitle">Educational, Vocational & Skill Training Certification</p>
+                    </div>
+                    <img class="qr" src="esdp-common-verification-qr.svg" alt="Verification QR">
+                </header>
+
+                <div class="cert-title">Diploma Certificate</div>
+                <div class="cert-subtitle">This is to certify that</div>
+
+                <section class="body-text">
+                    <p><span class="name">Rahul Varma</span></p>
+                    <p>Father's Name: <strong>Mohan Varma</strong></p>
+                    <p>has successfully completed the diploma program in</p>
+                    <p class="course">IT / Computer</p>
+                    <p>with the course duration of <strong>12 Months</strong> from ESDP Centre Chhindwara.</p>
+                </section>
+
+                <section class="details">
+                    <div class="detail"><span>Enrolment / Reg. No.</span><strong>ESDP1801222107MP</strong></div>
+                    <div class="detail"><span>Passing Year</span><strong>2026</strong></div>
+                    <div class="detail"><span>Course Status</span><strong>PASS</strong></div>
+                </section>
+
+                <section class="sign-row">
+                    <div class="sign-line">Prepared By</div>
+                    <div class="seal">ESDP<br>Official<br>Seal</div>
+                    <div class="sign-line">Controller of Examination</div>
+                </section>
+
+                <p class="note">Verify this certificate online using the enrolment number or QR code. This template is issued by ESDP for its training record.</p>
+            </div>
+        </div>
+    </main>
+    <div class="print"><button onclick="window.print()">Print / Save PDF</button></div>
+</body>
+</html>
