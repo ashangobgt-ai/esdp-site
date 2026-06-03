@@ -75,6 +75,7 @@
             background: rgba(255, 255, 255, 0.12);
             border-radius: 4px;
             padding: 5px 9px;
+            cursor: pointer;
         }
 
         .brand-row {
@@ -144,6 +145,7 @@
             font-size: 0.9rem;
             font-weight: 800;
             padding: 13px 11px;
+            cursor: pointer;
         }
 
         .nav-row a:hover {
@@ -172,6 +174,7 @@
             min-height: 48px;
             padding: 10px;
             text-align: center;
+            cursor: pointer;
         }
 
         .ticker {
@@ -575,8 +578,8 @@
         <div class="wrap">
             <div>info@esdp.org.in &nbsp; | &nbsp; Helpline: 1800 000 7878</div>
             <div class="top-links">
-                <a href="verify.html">Verify Student</a>
-                <a href="admission.html">Apply Online</a>
+                <a onclick="navigateTo('verify.html')">Verify Student</a>
+                <a onclick="navigateTo('admission.html')">Apply Online</a>
                 <a href="#login">Centre Login</a>
             </div>
         </div>
@@ -595,10 +598,10 @@
 
     <nav>
         <div class="nav-row wrap">
-            <a href="index.html">Home</a>
+            <a onclick="navigateTo('index.html')">Home</a>
             <a href="#about">The Council</a>
             <a href="#courses">Courses</a>
-            <a href="verify.html">Student Zone</a>
+            <a onclick="navigateTo('verify.html')">Student Zone</a>
             <a href="#centres">Affiliation Franchise</a>
             <a href="#updates">News & Updates</a>
             <a href="#contact">Contact Us</a>
@@ -607,8 +610,8 @@
 
     <div class="quick-panel">
         <div class="quick-grid wrap">
-            <a href="verify.html">Certificate Verification</a>
-            <a href="admission.html">Apply Admission</a>
+            <a onclick="navigateTo('verify.html')">Certificate Verification</a>
+            <a onclick="navigateTo('admission.html')">Apply Admission</a>
             <a href="#courses">Offered Courses</a>
             <a href="#centres">Search Centre</a>
             <a href="#downloads">Prospectus</a>
@@ -627,8 +630,8 @@
                     <h2>Official Website of ESDP Council</h2>
                     <p>Skill education, vocational training, online verification, centre support and placement-oriented learning programs for youth, women and working learners.</p>
                     <div class="hero-actions">
-                        <a class="btn gold" href="verify.html">Verify Student Record</a>
-                        <a class="btn light" href="admission.html">Apply for Admission</a>
+                        <a class="btn gold" onclick="navigateTo('verify.html')">Verify Student Record</a>
+                        <a class="btn light" onclick="navigateTo('admission.html')">Apply for Admission</a>
                     </div>
                 </div>
                 <aside class="notice-board" id="updates">
@@ -743,9 +746,9 @@
             <div>
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="verify.html">Verify Student</a></li>
-                    <li><a href="admission.html">Apply Online</a></li>
+                    <li><a onclick="navigateTo('index.html')">Home</a></li>
+                    <li><a onclick="navigateTo('verify.html')">Verify Student</a></li>
+                    <li><a onclick="navigateTo('admission.html')">Apply Online</a></li>
                     <li><a href="#">Contact Us</a></li>
                 </ul>
             </div>
@@ -774,5 +777,14 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        function navigateTo(page) {
+            // Get the current path and replace just the filename
+            const path = window.location.pathname;
+            const baseUrl = path.substring(0, path.lastIndexOf('/') + 1);
+            window.location.href = baseUrl + page;
+        }
+    </script>
 </body>
 </html>
