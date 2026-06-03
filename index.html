@@ -82,22 +82,22 @@
             background: #fff;
             gap: 18px;
             padding: 18px;
+            align-items: center;
         }
 
         .logo-mark {
             align-items: center;
-            background: linear-gradient(135deg, var(--blue), #1382c8);
-            border: 4px solid #e7f4ff;
-            border-radius: 50%;
-            color: #fff;
             display: flex;
             flex: 0 0 auto;
-            font-size: 1.35rem;
-            font-weight: 900;
-            height: 76px;
+            height: 90px;
             justify-content: center;
-            letter-spacing: 0;
-            width: 76px;
+            width: 90px;
+        }
+
+        .logo-mark img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .brand-title {
@@ -386,9 +386,7 @@
             text-align: center;
         }
 
-        .awards-grid,
-        .courses-grid,
-        .updates-grid {
+        .courses-grid {
             display: grid;
             gap: 20px;
             grid-template-columns: repeat(4, 1fr);
@@ -399,6 +397,9 @@
             flex-direction: column;
             overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
         }
 
         .course-card:hover {
@@ -504,7 +505,6 @@
         @media (max-width: 980px) {
             .quick-grid,
             .courses-grid,
-            .updates-grid,
             .association-strip {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -539,7 +539,6 @@
             .quick-grid,
             .feature-list,
             .courses-grid,
-            .updates-grid,
             .association-strip {
                 grid-template-columns: 1fr;
             }
@@ -559,7 +558,9 @@
     </div>
 
     <header class="brand-row wrap">
-        <div class="logo-mark">ESDP</div>
+        <div class="logo-mark">
+            <img src="https://raw.githubusercontent.com/ashangobgt-ai/esdp-site/main/esdp-logo.png" alt="ESDP Logo">
+        </div>
         <div class="brand-title">
             <h1>Education & Skill Development Program</h1>
             <p>An autonomous educational initiative for vocational training, skills certification and career support</p>
