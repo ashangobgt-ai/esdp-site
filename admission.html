@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESDP Online Admission Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* TABS */
+        .tab-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn.active {
+            background: #0b4f8a;
+            color: white;
+            border-color: #0b4f8a;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* HEADER */
+        .page-header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .page-header h1 {
+            color: #0b4f8a;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1.05rem;
+        }
+
+        /* FORM STYLING */
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .form-section h2 {
+            color: #0b4f8a;
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+            border-bottom: 3px solid #f5b301;
+            padding-bottom: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-grid.three {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #0b4f8a;
+            font-size: 0.95rem;
+        }
+
+        .required {
+            color: #c8202f;
+        }
+
+        input, select, textarea {
+            padding: 12px 14px;
+            border: 2px solid #d0d8e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #0b4f8a;
+            box-shadow: 0 0 0 4px rgba(11, 79, 138, 0.1);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* SECTION HEADER */
+        .section-divider {
+            background: #f7fbff;
+            border-left: 4px solid #0b4f8a;
+            padding: 15px;
+            margin: 25px 0 20px 0;
+            border-radius: 6px;
+        }
+
+        .section-divider h3 {
+            color: #0b4f8a;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        /* BUTTONS */
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #0b4f8a;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary:hover {
+            background: #07345f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(11, 79, 138, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f5b301;
+            color: #2b2100;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-secondary:hover {
+            background: #e6a100;
+            transform: translateY(-2px);
+        }
+
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+
+        .btn-delete {
+            background: #c8202f;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #a01a26;
+        }
+
+        /* TABLE */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1600px;
+        }
+
+        th {
+            background: linear-gradient(135deg, #0b4f8a, #07345f);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+
+        tr:hover {
+            background: #f7fbff;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+            font-size: 0.85rem;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-approved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* MESSAGES */
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .message.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+            display: block;
+        }
+
+        .message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            display: block;
+        }
+
+        .message.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+            display: block;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        /* STATS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #0b4f8a, #07345f);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* SEARCH BOX */
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+        }
+
+        .search-box button {
+            min-width: 150px;
+        }
+
+        @media (max-width: 1024px) {
+            .form-grid.three {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-grid,
+            .form-grid.three {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 8px 10px;
+            }
+
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .tab-container {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                width: 100%;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .tab-container, .search-box, .button-group, .tab-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <h1>📋 ESDP Online Admission Form</h1>
+            <p>Apply for courses in ESDP - Education & Skill Development Program | 2020-2027</p>
+        </div>
+
+        <!-- TABS -->
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('admission')">📝 Apply Now</button>
+            <button class="tab-btn" onclick="switchTab('applications')">📊 View Applications</button>
+            <button class="tab-btn" onclick="switchTab('admin')">⚙️ Admin Panel</button>
+        </div>
+
+        <!-- ===== ADMISSION FORM TAB ===== -->
+        <div id="admission" class="tab-content active">
+            <div class="form-section">
+                <h2>🎓 Student Admission Application</h2>
+                
+                <div id="admissionMessage" class="message"></div>
+
+                <form id="admissionForm">
+                    <!-- PERSONAL DETAILS -->
+                    <div class="section-divider">
+                        <h3>👤 Personal Details</h3>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Full Name <span class="required">*</span></label>
+                            <input type="text" id="studentName" placeholder="Enter full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address <span class="required">*</span></label>
+                            <input type="email" id="studentEmail" placeholder="Enter email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Mobile Number <span class="required">*</span></label>
+                            <input type="tel" id="studentPhone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Birth <span class="required">*</span></label>
+                            <input type="date" id="dob" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Father's Name <span class="required">*</span></label>
+                            <input type="text" id="fatherName" placeholder="Father's full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mother's Name</label>
+                            <input type="text" id="motherName" placeholder="Mother's full name">
+                        </div>
+                    </div>
+
+                    <div class="form-grid full">
+                        <div class="form-group">
+                            <label>Address <span class="required">*</span></label>
+                            <textarea id="address" placeholder="Enter full address" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-grid three">
+                        <div class="form-group">
+                            <label>City <span class="required">*</span></label>
+                            <input type="text" id="city" placeholder="City" required>
+                        </div>
+                        <div class="form-group">
+                            <label>State <span class="required">*</span></label>
+                            <input type="text" id="state" placeholder="State" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Pincode <span class="required">*</span></label>
+                            <input type="text" id="pincode" placeholder="Pincode" pattern="[0-9]{6}" required>
+                        </div>
+                    </div>
+
+                    <!-- EDUCATION DETAILS -->
+                    <div class="section-divider">
+                        <h3>🎯 Education & Qualification</h3>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Highest Education <span class="required">*</span></label>
+                            <select id="education" required>
+                                <option value="">Select Education Qualification</option>
+                                <option value="10th Pass">10th Pass</option>
+                                <option value="12th Pass">12th Pass</option>
+                                <option value="Diploma">Diploma</option>
+                                <option value="Bachelor Degree">Bachelor Degree</option>
+                                <option value="Master Degree">Master Degree</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Board/University <span class="required">*</span></label>
+                            <input type="text" id="board" placeholder="Board/University name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Year of Passing <span class="required">*</span></label>
+                            <input type="number" id="passingYear" placeholder="Year" min="1990" max="2026" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Percentage/CGPA <span class="required">*</span></label>
+                            <input type="number" id="percentage" placeholder="Percentage %" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <!-- COURSE DETAILS -->
+                    <div class="section-divider">
+                        <h3>📚 Course Selection</h3>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Sector <span class="required">*</span></label>
+                            <select id="sector" required onchange="updateCourses()">
+                                <option value="">Select Sector</option>
+                                <option value="IT & Computer">IT & Computer Science</option>
+                                <option value="Hotel Management">Hotel Management & Hospitality</option>
+                                <option value="Fashion & Design">Fashion & Design</option>
+                                <option value="Healthcare">Healthcare & Wellness</option>
+                                <option value="Business">Business Administration</option>
+                                <option value="Engineering">Engineering & Technology</option>
+                                <option value="Agriculture">Agriculture & Farming</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Course Name <span class="required">*</span></label>
+                            <select id="courseName" required>
+                                <option value="">Select Course</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Session Year <span class="required">*</span></label>
+                            <select id="sessionYear" required>
+                                <option value="">Select Session Year</option>
+                                <option value="2020-21">2020-21</option>
+                                <option value="2021-22">2021-22</option>
+                                <option value="2022-23">2022-23</option>
+                                <option value="2023-24">2023-24</option>
+                                <option value="2024-25">2024-25</option>
+                                <option value="2025-26">2025-26</option>
+                                <option value="2026-27">2026-27</option>
+                                <option value="2027-28">2027-28</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Centre Name <span class="required">*</span></label>
+                            <input type="text" id="centreName" placeholder="Training Centre Name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid full">
+                        <div class="form-group">
+                            <label>Why do you want to join this course?</label>
+                            <textarea id="motivation" placeholder="Share your motivation..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- TERMS & CONDITIONS -->
+                    <div class="section-divider">
+                        <h3>✅ Agreement</h3>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label style="display: flex; align-items: center; gap: 10px; font-weight: normal;">
+                            <input type="checkbox" id="agreeTerms" required>
+                            I agree to the ESDP terms and conditions and declare that all information provided is true.
+                        </label>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">✅ Submit Application</button>
+                        <button type="reset" class="btn-secondary">🔄 Clear Form</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ===== APPLICATIONS VIEW TAB ===== -->
+        <div id="applications" class="tab-content">
+            <div class="form-section">
+                <h2>📊 Your Applications</h2>
+                
+                <div id="myApplicationsMessage" class="message"></div>
+
+                <div class="search-box">
+                    <input type="email" id="searchEmail" placeholder="Enter your email to view applications">
+                    <button class="btn-primary" onclick="searchMyApplications()">🔍 Search</button>
+                </div>
+
+                <div id="myApplicationsResult" style="display: none;">
+                    <div class="table-container">
+                        <table id="myApplicationsTable">
+                            <thead>
+                                <tr>
+                                    <th>Application ID</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Session</th>
+                                    <th>Status</th>
+                                    <th>Submitted Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myApplicationsBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ADMIN PANEL TAB ===== -->
+        <div id="admin" class="tab-content">
+            <div class="form-section">
+                <h2>⚙️ Admin Dashboard</h2>
+
+                <!-- STATS -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="number" id="totalApplications">0</div>
+                        <div class="label">Total Applications</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number" id="pendingApplications">0</div>
+                        <div class="label">Pending</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number" id="approvedApplications">0</div>
+                        <div class="label">Approved</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number" id="rejectedApplications">0</div>
+                        <div class="label">Rejected</div>
+                    </div>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" id="adminSearch" placeholder="Search by name, email, or application ID">
+                    <button class="btn-primary" onclick="adminSearch()">🔍 Search</button>
+                </div>
+
+                <div class="table-container">
+                    <table id="adminTable">
+                        <thead>
+                            <tr>
+                                <th>App ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Course</th>
+                                <th>Sector</th>
+                                <th>Session</th>
+                                <th>Centre</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminBody">
+                            <tr><td colspan="11" style="text-align:center; padding: 40px; color: #999;">No applications yet</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // COURSE DATABASE
+        const courses = {
+            'IT & Computer': [
+                'Diploma in Computer Science',
+                'Bachelor in Information Technology',
+                'Web Development Course',
+                'Data Science Certification'
+            ],
+            'Hotel Management': [
+                'Diploma in Hotel Management',
+                'Certificate in Hospitality',
+                'Advanced Hotel Management',
+                'Food Service Management'
+            ],
+            'Fashion & Design': [
+                'Diploma in Fashion Design',
+                'Certificate in Tailoring',
+                'Jewelry Design Course',
+                'Textile Design'
+            ],
+            'Healthcare': [
+                'Certificate in Nursing Assistant',
+                'Wellness & Spa Management',
+                'Paramedical Technician',
+                'Healthcare Administration'
+            ],
+            'Business': [
+                'Diploma in Business Administration',
+                'Certificate in Entrepreneurship',
+                'Digital Marketing Course',
+                'Financial Management'
+            ],
+            'Engineering': [
+                'Diploma in Mechanical Engineering',
+                'Diploma in Electrical Engineering',
+                'Certificate in Auto Mechanics',
+                'Industrial Maintenance'
+            ],
+            'Agriculture': [
+                'Certificate in Organic Farming',
+                'Diploma in Agriculture',
+                'Animal Husbandry Course',
+                'Agribusiness Management'
+            ],
+            'Others': [
+                'General Course 1',
+                'General Course 2',
+                'General Course 3'
+            ]
+        };
+
+        let applications = JSON.parse(localStorage.getItem('esdpApplications')) || [];
+
+        // Tab Switching
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tab === 'admin') {
+                updateAdminDashboard();
+                renderAdminTable();
+            }
+        }
+
+        // Update Courses based on Sector
+        function updateCourses() {
+            const sector = document.getElementById('sector').value;
+            const courseSelect = document.getElementById('courseName');
+            courseSelect.innerHTML = '<option value="">Select Course</option>';
+
+            if (sector && courses[sector]) {
+                courses[sector].forEach(course => {
+                    const option = document.createElement('option');
+                    option.value = course;
+                    option.textContent = course;
+                    courseSelect.appendChild(option);
+                });
+            }
+        }
+
+        // ADMISSION FORM SUBMISSION
+        document.getElementById('admissionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const application = {
+                id: 'ESDP' + Date.now(),
+                name: document.getElementById('studentName').value,
+                email: document.getElementById('studentEmail').value,
+                phone: document.getElementById('studentPhone').value,
+                dob: document.getElementById('dob').value,
+                father: document.getElementById('fatherName').value,
+                mother: document.getElementById('motherName').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                pincode: document.getElementById('pincode').value,
+                education: document.getElementById('education').value,
+                board: document.getElementById('board').value,
+                passingYear: document.getElementById('passingYear').value,
+                percentage: document.getElementById('percentage').value,
+                sector: document.getElementById('sector').value,
+                course: document.getElementById('courseName').value,
+                session: document.getElementById('sessionYear').value,
+                centre: document.getElementById('centreName').value,
+                motivation: document.getElementById('motivation').value,
+                status: 'PENDING',
+                submittedDate: new Date().toLocaleDateString('en-IN'),
+                submittedTime: new Date().toLocaleTimeString('en-IN')
+            };
+
+            applications.push(application);
+            localStorage.setItem('esdpApplications', JSON.stringify(applications));
+
+            showMessage('admissionMessage', '✅ Application submitted successfully! Your Application ID: ' + application.id, 'success');
+            document.getElementById('admissionForm').reset();
+
+            setTimeout(() => {
+                document.getElementById('admissionMessage').style.display = 'none';
+            }, 4000);
+        });
+
+        // SEARCH MY APPLICATIONS
+        function searchMyApplications() {
+            const email = document.getElementById('searchEmail').value.trim();
+
+            if (!email) {
+                showMessage('myApplicationsMessage', 'Please enter your email', 'error');
+                return;
+            }
+
+            const userApps = applications.filter(app => app.email.toLowerCase() === email.toLowerCase());
+
+            if (userApps.length === 0) {
+                showMessage('myApplicationsMessage', 'No applications found for this email', 'error');
+                document.getElementById('myApplicationsResult').style.display = 'none';
+                return;
+            }
+
+            const tbody = document.getElementById('myApplicationsBody');
+            tbody.innerHTML = userApps.map((app, index) => `
+                <tr>
+                    <td><strong>${app.id}</strong></td>
+                    <td>${app.name}</td>
+                    <td>${app.course}</td>
+                    <td>${app.session}</td>
+                    <td><span class="status-badge status-${app.status.toLowerCase()}">${app.status}</span></td>
+                    <td>${app.submittedDate} ${app.submittedTime}</td>
+                </tr>
+            `).join('');
+
+            document.getElementById('myApplicationsResult').style.display = 'block';
+            showMessage('myApplicationsMessage', `Found ${userApps.length} application(s)`, 'info');
+        }
+
+        // ADMIN DASHBOARD
+        function updateAdminDashboard() {
+            document.getElementById('totalApplications').textContent = applications.length;
+            document.getElementById('pendingApplications').textContent = applications.filter(a => a.status === 'PENDING').length;
+            document.getElementById('approvedApplications').textContent = applications.filter(a => a.status === 'APPROVED').length;
+            document.getElementById('rejectedApplications').textContent = applications.filter(a => a.status === 'REJECTED').length;
+        }
+
+        // RENDER ADMIN TABLE
+        function renderAdminTable(filter = null) {
+            const tbody = document.getElementById('adminBody');
+
+            let displayApps = applications;
+            if (filter) {
+                displayApps = applications.filter(app =>
+                    app.name.toLowerCase().includes(filter.toLowerCase()) ||
+                    app.email.toLowerCase().includes(filter.toLowerCase()) ||
+                    app.id.toLowerCase().includes(filter.toLowerCase())
+                );
+            }
+
+            if (displayApps.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align:center; padding: 40px; color: #999;">No applications found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = displayApps.map((app, index) => `
+                <tr>
+                    <td><strong>${app.id}</strong></td>
+                    <td>${app.name}</td>
+                    <td>${app.email}</td>
+                    <td>${app.phone}</td>
+                    <td>${app.course}</td>
+                    <td>${app.sector}</td>
+                    <td>${app.session}</td>
+                    <td>${app.centre}</td>
+                    <td>
+                        <select class="status-select" onchange="updateStatus('${app.id}', this.value)">
+                            <option value="PENDING" ${app.status === 'PENDING' ? 'selected' : ''}>⏳ PENDING</option>
+                            <option value="APPROVED" ${app.status === 'APPROVED' ? 'selected' : ''}>✅ APPROVED</option>
+                            <option value="REJECTED" ${app.status === 'REJECTED' ? 'selected' : ''}>❌ REJECTED</option>
+                        </select>
+                    </td>
+                    <td>${app.submittedDate}</td>
+                    <td>
+                        <button class="btn-primary btn-small" onclick="viewApplication('${app.id}')">View</button>
+                        <button class="btn-delete btn-small" onclick="deleteApplication('${app.id}')">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // UPDATE STATUS
+        function updateStatus(appId, newStatus) {
+            const app = applications.find(a => a.id === appId);
+            if (app) {
+                app.status = newStatus;
+                localStorage.setItem('esdpApplications', JSON.stringify(applications));
+                updateAdminDashboard();
+            }
+        }
+
+        // DELETE APPLICATION
+        function deleteApplication(appId) {
+            if (confirm('Delete this application?')) {
+                applications = applications.filter(a => a.id !== appId);
+                localStorage.setItem('esdpApplications', JSON.stringify(applications));
+                renderAdminTable();
+                updateAdminDashboard();
+            }
+        }
+
+        // ADMIN SEARCH
+        function adminSearch() {
+            const query = document.getElementById('adminSearch').value;
+            renderAdminTable(query);
+        }
+
+        // VIEW APPLICATION DETAILS
+        function viewApplication(appId) {
+            const app = applications.find(a => a.id === appId);
+            if (app) {
+                alert(`
+APPLICATION DETAILS
+==================
+ID: ${app.id}
+Name: ${app.name}
+Email: ${app.email}
+Phone: ${app.phone}
+DOB: ${app.dob}
+Father: ${app.father}
+
+ADDRESS: ${app.address}
+City: ${app.city}, State: ${app.state}
+Pincode: ${app.pincode}
+
+EDUCATION: ${app.education}
+Board: ${app.board}
+Year: ${app.passingYear}
+Percentage: ${app.percentage}%
+
+COURSE: ${app.course}
+Sector: ${app.sector}
+Session: ${app.session}
+Centre: ${app.centre}
+
+STATUS: ${app.status}
+Applied: ${app.submittedDate} ${app.submittedTime}
+                `);
+            }
+        }
+
+        function showMessage(elementId, message, type) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.className = `message ${type}`;
+            el.style.display = 'block';
+        }
+
+        // Initialize
+        updateAdminDashboard();
+    </script>
+</body>
+</html>
