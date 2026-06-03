@@ -160,7 +160,7 @@
         .quick-grid {
             display: grid;
             gap: 10px;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             padding: 12px 18px;
         }
 
@@ -390,77 +390,54 @@
         .courses-grid,
         .updates-grid {
             display: grid;
-            gap: 16px;
+            gap: 20px;
             grid-template-columns: repeat(4, 1fr);
-        }
-
-        .course-tools {
-            display: grid;
-            gap: 14px;
-            grid-template-columns: 1fr auto;
-            margin-bottom: 18px;
-        }
-
-        .course-tools input {
-            width: 100%;
-        }
-
-        .course-total {
-            align-items: center;
-            background: var(--deep);
-            border-radius: 6px;
-            color: #fff;
-            display: flex;
-            font-weight: 900;
-            justify-content: center;
-            min-width: 170px;
-            padding: 11px 14px;
-            text-align: center;
-        }
-
-        .award-card {
-            overflow: hidden;
-        }
-
-        .award-card img {
-            height: 140px;
-            object-fit: cover;
-            width: 100%;
-        }
-
-        .award-card div,
-        .course-card,
-        .update-card {
-            padding: 16px;
         }
 
         .course-card {
             display: flex;
             flex-direction: column;
-            min-height: 150px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .award-card h3,
-        .course-card h3,
-        .update-card h3 {
-            color: var(--deep);
-            font-size: 1rem;
-            line-height: 1.25;
-            margin-bottom: 8px;
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .course-body {
+            padding: 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .course-code {
             color: var(--red);
             font-size: 0.78rem;
             font-weight: 900;
-            margin-bottom: 7px;
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
 
-        .course-count {
-            color: var(--green);
-            font-weight: 900;
-            margin-top: auto;
+        .course-card h3 {
+            color: var(--deep);
+            font-size: 1.1rem;
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+
+        .course-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            flex: 1;
         }
 
         .stats {
@@ -526,10 +503,8 @@
 
         @media (max-width: 980px) {
             .quick-grid,
-            .awards-grid,
             .courses-grid,
             .updates-grid,
-            .course-tools,
             .association-strip {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -563,10 +538,8 @@
 
             .quick-grid,
             .feature-list,
-            .awards-grid,
             .courses-grid,
             .updates-grid,
-            .course-tools,
             .association-strip {
                 grid-template-columns: 1fr;
             }
@@ -601,7 +574,7 @@
             <a onclick="navigateTo('index.html')">Home</a>
             <a href="#about">The Council</a>
             <a href="#courses">Courses</a>
-            <a onclick="navigateTo('verify.html')">Student Zone</a>
+            <a onclick="navigateTo('verify.html')">Verify Student</a>
             <a href="#centres">Affiliation Franchise</a>
             <a href="#updates">News & Updates</a>
             <a href="#contact">Contact Us</a>
@@ -610,12 +583,10 @@
 
     <div class="quick-panel">
         <div class="quick-grid wrap">
-            <a onclick="navigateTo('verify.html')">Certificate Verification</a>
+            <a onclick="navigateTo('verify.html')">Verify Student</a>
             <a onclick="navigateTo('admission.html')">Apply Admission</a>
             <a href="#courses">Offered Courses</a>
             <a href="#centres">Search Centre</a>
-            <a href="#downloads">Prospectus</a>
-            <a href="#contact">Help Desk</a>
         </div>
     </div>
 
@@ -684,26 +655,74 @@
             </div>
         </section>
 
-        <section>
+        <section id="courses">
             <div class="wrap">
-                <h2 class="section-title">Achievements & Recognition</h2>
-                <p class="section-lead">Institutional milestones, training participation and community education initiatives.</p>
-                <div class="awards-grid">
-                    <article class="award-card">
-                        <img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=700&q=82" alt="Students in seminar hall">
-                        <div><h3>Skill Development Drives</h3><p>Training awareness camps for career-focused learning.</p></div>
+                <h2 class="section-title">Offered Courses</h2>
+                <p class="section-lead">ESDP के विभिन्न कोर्स - आईटी, होटल मैनेजमेंट, फैशन डिजाइन, स्वास्थ्य सेवा, व्यावसायिक प्रशिक्षण और कौशल विकास कार्यक्रम।</p>
+                <div class="courses-grid" id="courseGrid">
+                    <article class="course-card">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80" alt="Computer Science & IT">
+                        <div class="course-body">
+                            <div class="course-code">IT-COMPUTER</div>
+                            <h3>Computer Science & IT</h3>
+                            <p>Digital technology and programming courses for software development</p>
+                        </div>
                     </article>
-                    <article class="award-card">
-                        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=700&q=82" alt="Training discussion">
-                        <div><h3>Centre Support Network</h3><p>Operational support for authorized learning centres.</p></div>
+                    <article class="course-card">
+                        <img src="https://images.unsplash.com/photo-1504674900368-7cc28cdc0b11?auto=format&fit=crop&w=600&q=80" alt="Hotel Management">
+                        <div class="course-body">
+                            <div class="course-code">HOSPITALITY</div>
+                            <h3>Hotel Management</h3>
+                            <p>Hotel operations, culinary arts and hospitality training</p>
+                        </div>
                     </article>
-                    <article class="award-card">
-                        <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=700&q=82" alt="Education workshop">
-                        <div><h3>Workshops & Events</h3><p>Regular academic and placement-oriented sessions.</p></div>
+                    <article class="course-card">
+                        <img src="https://images.unsplash.com/photo-1595777707802-18b27be3c977?auto=format&fit=crop&w=600&q=80" alt="Fashion & Design">
+                        <div class="course-body">
+                            <div class="course-code">FASHION DESIGN</div>
+                            <h3>Fashion & Design</h3>
+                            <p>Tailoring, jewelry design and fashion technology courses</p>
+                        </div>
                     </article>
-                    <article class="award-card">
-                        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=700&q=82" alt="Modern training classroom">
-                        <div><h3>Digital Records</h3><p>Roll-number based student record verification.</p></div>
+                    <article class="course-card">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80" alt="Healthcare & Wellness">
+                        <div class="course-body">
+                            <div class="course-code">HEALTHCARE</div>
+                            <h3>Healthcare & Wellness</h3>
+                            <p>Nursing, healthcare assistant and wellness management training</p>
+                        </div>
+                    </article>
+                    <article class="course-card">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80" alt="Business Administration">
+                        <div class="course-body">
+                            <div class="course-code">BUSINESS ADMIN</div>
+                            <h3>Business Administration</h3>
+                            <p>Management, entrepreneurship and business skills courses</p>
+                        </div>
+                    </article>
+                    <article class="course-card">
+                        <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=600&q=80" alt="Engineering & Technology">
+                        <div class="course-body">
+                            <div class="course-code">ENGINEERING</div>
+                            <h3>Engineering & Technology</h3>
+                            <p>Technical trades, maintenance and industrial training programs</p>
+                        </div>
+                    </article>
+                    <article class="course-card">
+                        <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad576?auto=format&fit=crop&w=600&q=80" alt="Agriculture & Farming">
+                        <div class="course-body">
+                            <div class="course-code">AGRICULTURE</div>
+                            <h3>Agriculture & Farming</h3>
+                            <p>Modern farming techniques and agribusiness courses</p>
+                        </div>
+                    </article>
+                    <article class="course-card">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80" alt="Vocational Programs">
+                        <div class="course-body">
+                            <div class="course-code">VOCATIONAL</div>
+                            <h3>Vocational Programs</h3>
+                            <p>Job-oriented practical skill courses for employment</p>
+                        </div>
                     </article>
                 </div>
             </div>
@@ -716,23 +735,6 @@
                 <div class="stat"><strong>425+</strong><span>Training Centres</span></div>
                 <div class="stat"><strong>85+</strong><span>Offered Courses</span></div>
                 <div class="stat"><strong>24x7</strong><span>Online Verification</span></div>
-            </div>
-        </section>
-
-        <section id="courses">
-            <div class="wrap">
-                <h2 class="section-title">Offered Courses</h2>
-                <p class="section-lead">ESDP के विभिन्न कोर्स - आईटी, होटल मैनेजमेंट, फैशन डिजाइन, स्वास्थ्य सेवा, व्यावसायिक प्रशिक्षण और कौशल विकास कार्यक्रम।</p>
-                <div class="courses-grid" id="courseGrid">
-                    <article class="course-card"><div class="course-code">IT-COMPUTER</div><h3>Computer Science & IT</h3><p>Digital technology and programming courses</p></article>
-                    <article class="course-card"><div class="course-code">HOSPITALITY</div><h3>Hotel Management</h3><p>Hotel operations and hospitality training</p></article>
-                    <article class="course-card"><div class="course-code">FASHION DESIGN</div><h3>Fashion & Design</h3><p>Tailoring, jewelry and design courses</p></article>
-                    <article class="course-card"><div class="course-code">HEALTHCARE</div><h3>Healthcare & Wellness</h3><p>Nursing and healthcare assistant training</p></article>
-                    <article class="course-card"><div class="course-code">BUSINESS ADMIN</div><h3>Business Administration</h3><p>Management and entrepreneurship courses</p></article>
-                    <article class="course-card"><div class="course-code">ENGINEERING</div><h3>Engineering & Technology</h3><p>Technical trades and maintenance courses</p></article>
-                    <article class="course-card"><div class="course-code">AGRICULTURE</div><h3>Agriculture & Farming</h3><p>Modern farming and agribusiness courses</p></article>
-                    <article class="course-card"><div class="course-code">VOCATIONAL</div><h3>Vocational Programs</h3><p>Job-oriented practical skill courses</p></article>
-                </div>
             </div>
         </section>
     </main>
@@ -780,7 +782,6 @@
 
     <script>
         function navigateTo(page) {
-            // Get the current path and replace just the filename
             const path = window.location.pathname;
             const baseUrl = path.substring(0, path.lastIndexOf('/') + 1);
             window.location.href = baseUrl + page;
