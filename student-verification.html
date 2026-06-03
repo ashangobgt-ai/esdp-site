@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Verification Form - ESDP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #0b4f8a, #07345f);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-grid.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #0b4f8a;
+        }
+
+        input, select, textarea {
+            padding: 12px;
+            border: 1px solid #b8c8d9;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: Arial, sans-serif;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #0b4f8a;
+            box-shadow: 0 0 0 3px rgba(11, 79, 138, 0.14);
+        }
+
+        .photo-upload {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .photo-preview {
+            width: 100px;
+            height: 100px;
+            border: 2px dashed #0b4f8a;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f7fbff;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .photo-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 4px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #0b4f8a;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background: #07345f;
+        }
+
+        .btn-secondary {
+            background: #f5b301;
+            color: #2b2100;
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background: #e6a100;
+        }
+
+        .btn-danger {
+            background: #c8202f;
+            color: white;
+            padding: 8px 16px;
+        }
+
+        .btn-danger:hover {
+            background: #a01a26;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1400px;
+        }
+
+        th {
+            background: #0b4f8a;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+
+        tr:hover {
+            background: #f7fbff;
+        }
+
+        .student-photo-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+            font-size: 0.85rem;
+        }
+
+        .status-pass {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-fail {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 0.85rem;
+        }
+
+        .btn-edit {
+            background: #0b4f8a;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #c8202f;
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-header">
+            <h1>📋 Student Verification Form</h1>
+            <p>Add and manage student records with complete information</p>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            ✅ Student record added successfully!
+        </div>
+
+        <div class="form-grid full">
+            <form id="verificationForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Session *</label>
+                        <input type="text" id="session" placeholder="e.g., 2020-21" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Enrollment Number *</label>
+                        <input type="text" id="enrollment" placeholder="e.g., 001101" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Student Photo *</label>
+                        <div class="photo-upload">
+                            <input type="file" id="studentPhoto" accept="image/*" required>
+                            <div class="photo-preview" id="photoPreview">No image</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Name of Student *</label>
+                        <input type="text" id="studentName" placeholder="Full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Father Name *</label>
+                        <input type="text" id="fatherName" placeholder="Father's full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date of Birth *</label>
+                        <input type="date" id="dob" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course Name *</label>
+                        <input type="text" id="courseName" placeholder="e.g., DIPLOMA IN BEAUTY CULTURE" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Result *</label>
+                        <select id="result" required>
+                            <option value="">Select Result</option>
+                            <option value="PASS">PASS</option>
+                            <option value="FAIL">FAIL</option>
+                            <option value="PENDING">PENDING</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>State *</label>
+                        <input type="text" id="state" placeholder="e.g., MADHYA PRADESH" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>District *</label>
+                        <input type="text" id="district" placeholder="e.g., INDORE" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Centre Name *</label>
+                        <input type="text" id="centreName" placeholder="Centre name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Centre Code *</label>
+                        <input type="text" id="centreCode" placeholder="e.g., MP001" required>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn-primary">➕ Add Student</button>
+                    <button type="reset" class="btn-secondary">↻ Clear Form</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <table id="studentsTable">
+                <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Session</th>
+                        <th>Enrollment</th>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Father Name</th>
+                        <th>DOB</th>
+                        <th>Course</th>
+                        <th>Result</th>
+                        <th>State</th>
+                        <th>District</th>
+                        <th>Centre</th>
+                        <th>Code</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="studentsBody">
+                    <tr>
+                        <td colspan="14" class="empty-state">
+                            <p>📭 No students added yet</p>
+                            <small>Fill the form above and click "Add Student" to get started</small>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let students = JSON.parse(localStorage.getItem('students')) || [];
+
+        // Photo preview
+        document.getElementById('studentPhoto').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const preview = document.getElementById('photoPreview');
+                    preview.innerHTML = `<img src="${event.target.result}" alt="Preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Form submission
+        document.getElementById('verificationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const student = {
+                id: Date.now(),
+                session: document.getElementById('session').value,
+                enrollment: document.getElementById('enrollment').value,
+                photo: document.getElementById('photoPreview').querySelector('img')?.src || 'No photo',
+                name: document.getElementById('studentName').value,
+                father: document.getElementById('fatherName').value,
+                dob: document.getElementById('dob').value,
+                course: document.getElementById('courseName').value,
+                result: document.getElementById('result').value,
+                state: document.getElementById('state').value,
+                district: document.getElementById('district').value,
+                centre: document.getElementById('centreName').value,
+                code: document.getElementById('centreCode').value
+            };
+
+            students.push(student);
+            localStorage.setItem('students', JSON.stringify(students));
+
+            // Show success message
+            const msg = document.getElementById('successMessage');
+            msg.style.display = 'block';
+            setTimeout(() => msg.style.display = 'none', 3000);
+
+            document.getElementById('verificationForm').reset();
+            document.getElementById('photoPreview').innerHTML = 'No image';
+            renderTable();
+        });
+
+        function renderTable() {
+            const tbody = document.getElementById('studentsBody');
+
+            if (students.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="14" class="empty-state">
+                            <p>📭 No students added yet</p>
+                            <small>Fill the form above and click "Add Student" to get started</small>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = students.map((student, index) => `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${student.session}</td>
+                    <td>${student.enrollment}</td>
+                    <td>
+                        ${student.photo !== 'No photo' ? `<img src="${student.photo}" alt="Student" class="student-photo-thumb">` : '—'}
+                    </td>
+                    <td>${student.name}</td>
+                    <td>${student.father}</td>
+                    <td>${student.dob}</td>
+                    <td>${student.course}</td>
+                    <td>
+                        <span class="status-badge status-${student.result.toLowerCase()}">
+                            ${student.result}
+                        </span>
+                    </td>
+                    <td>${student.state}</td>
+                    <td>${student.district}</td>
+                    <td>${student.centre}</td>
+                    <td>${student.code}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-small btn-edit" onclick="editStudent(${student.id})">Edit</button>
+                            <button class="btn-small btn-delete" onclick="deleteStudent(${student.id})">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function deleteStudent(id) {
+            if (confirm('Are you sure you want to delete this student record?')) {
+                students = students.filter(s => s.id !== id);
+                localStorage.setItem('students', JSON.stringify(students));
+                renderTable();
+            }
+        }
+
+        function editStudent(id) {
+            alert('Edit feature coming soon!');
+        }
+
+        // Initial render
+        renderTable();
+    </script>
+</body>
+</html>
