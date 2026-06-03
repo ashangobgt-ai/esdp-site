@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESDP Student Verification System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* TABS */
+        .tab-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn.active {
+            background: #0b4f8a;
+            color: white;
+            border-color: #0b4f8a;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* HEADER */
+        .page-header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .page-header h1 {
+            color: #0b4f8a;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1.05rem;
+        }
+
+        /* FORM STYLING */
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #0b4f8a;
+            font-size: 0.95rem;
+        }
+
+        input, select, textarea {
+            padding: 12px 14px;
+            border: 2px solid #d0d8e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #0b4f8a;
+            box-shadow: 0 0 0 4px rgba(11, 79, 138, 0.1);
+        }
+
+        /* BUTTONS */
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #0b4f8a;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary:hover {
+            background: #07345f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(11, 79, 138, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f5b301;
+            color: #2b2100;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-secondary:hover {
+            background: #e6a100;
+            transform: translateY(-2px);
+        }
+
+        .btn-print {
+            background: #15803d;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: #117a2f;
+        }
+
+        .btn-download {
+            background: #c8202f;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background: #a01a26;
+        }
+
+        /* TABLE */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1400px;
+        }
+
+        th {
+            background: linear-gradient(135deg, #0b4f8a, #07345f);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+
+        tr:hover {
+            background: #f7fbff;
+        }
+
+        .photo-thumb {
+            width: 45px;
+            height: 45px;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 2px solid #0b4f8a;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+            font-size: 0.85rem;
+        }
+
+        .status-pass {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-fail {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* VERIFICATION RESULT */
+        .verification-result {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .verification-result.show {
+            display: block;
+        }
+
+        .result-header {
+            background: linear-gradient(135deg, #0b4f8a, #07345f);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .result-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .student-photo-large {
+            width: 200px;
+            height: 240px;
+            border: 3px solid #0b4f8a;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .result-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .detail-item {
+            border-left: 4px solid #0b4f8a;
+            padding: 12px 15px;
+            background: #f7fbff;
+            border-radius: 6px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #0b4f8a;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-size: 1.05rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .verification-badge {
+            text-align: center;
+            padding: 20px;
+            background: #ecfdf5;
+            border: 2px solid #bbf7d0;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .verification-badge h3 {
+            color: #166534;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .verification-badge p {
+            color: #166534;
+            font-weight: 600;
+        }
+
+        .qr-code {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        /* MESSAGES */
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .message.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+            display: block;
+        }
+
+        .message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            display: block;
+        }
+
+        .message.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+            display: block;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        /* SEARCH BOX */
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+        }
+
+        .search-box button {
+            min-width: 150px;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid,
+            .result-details,
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 8px 10px;
+            }
+
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .tab-container {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .tab-container, .search-box, .button-group, .btn-primary, .btn-secondary {
+                display: none;
+            }
+
+            .verification-result {
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <h1>🎓 ESDP Student Verification System</h1>
+            <p>Official Student Record Verification Portal | Education & Skill Development Program</p>
+        </div>
+
+        <!-- TABS -->
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('admin')">📝 Admin Panel</button>
+            <button class="tab-btn" onclick="switchTab('verify')">🔍 Public Verification</button>
+        </div>
+
+        <!-- ===== ADMIN PANEL ===== -->
+        <div id="admin" class="tab-content active">
+            <div class="form-section">
+                <h2 style="color: #0b4f8a; margin-bottom: 20px;">➕ Add New Student Record</h2>
+                
+                <div id="adminMessage" class="message"></div>
+
+                <form id="adminForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Academic Session *</label>
+                            <input type="text" id="session" placeholder="e.g., 2023-24" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Enrollment Number *</label>
+                            <input type="text" id="enrollment" placeholder="e.g., 001101" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid full">
+                        <div class="form-group">
+                            <label>Student Photo *</label>
+                            <input type="file" id="studentPhoto" accept="image/*" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" id="studentName" placeholder="Full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Father's Name *</label>
+                            <input type="text" id="fatherName" placeholder="Father's name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Date of Birth *</label>
+                            <input type="date" id="dob" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Course Name *</label>
+                            <input type="text" id="courseName" placeholder="e.g., Diploma in Beauty Culture" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Result *</label>
+                            <select id="result" required>
+                                <option value="">Select Result Status</option>
+                                <option value="PASS">✅ PASS</option>
+                                <option value="FAIL">❌ FAIL</option>
+                                <option value="PENDING">⏳ PENDING</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>State *</label>
+                            <input type="text" id="state" placeholder="e.g., Madhya Pradesh" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>District *</label>
+                            <input type="text" id="district" placeholder="e.g., Indore" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Centre Name *</label>
+                            <input type="text" id="centreName" placeholder="Centre name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid full">
+                        <div class="form-group">
+                            <label>Centre Code *</label>
+                            <input type="text" id="centreCode" placeholder="e.g., MP001" required>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">✅ Save Student Record</button>
+                        <button type="reset" class="btn-secondary">🔄 Clear Form</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ALL STUDENTS TABLE -->
+            <div class="form-section">
+                <h2 style="color: #0b4f8a; margin-bottom: 20px;">📊 All Student Records</h2>
+                <div class="table-container">
+                    <table id="adminTable">
+                        <thead>
+                            <tr>
+                                <th>S.No.</th>
+                                <th>Session</th>
+                                <th>Enrollment</th>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Father</th>
+                                <th>DOB</th>
+                                <th>Course</th>
+                                <th>Result</th>
+                                <th>State</th>
+                                <th>District</th>
+                                <th>Centre</th>
+                                <th>Code</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminBody">
+                            <tr><td colspan="14" class="empty-state">No records yet</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VERIFICATION PAGE ===== -->
+        <div id="verify" class="tab-content">
+            <div class="form-section">
+                <h2 style="color: #0b4f8a; margin-bottom: 20px;">🔍 Verify Your Student Record</h2>
+                <p style="color: #666; margin-bottom: 20px;">Enter your Enrollment Number to view your complete student record and verify your details.</p>
+
+                <div id="verifyMessage" class="message"></div>
+
+                <div class="search-box">
+                    <input type="text" id="searchEnrollment" placeholder="Enter Enrollment Number (e.g., 001101)">
+                    <button class="btn-primary" onclick="verifyStudent()">🔍 Search</button>
+                </div>
+
+                <!-- VERIFICATION RESULT -->
+                <div id="verificationResult" class="verification-result">
+                    <div class="result-header">
+                        <h2>✅ Student Record Verified</h2>
+                        <p>Official ESDP Student Record</p>
+                    </div>
+
+                    <div class="result-grid">
+                        <div style="text-align: center;">
+                            <img id="resultPhoto" src="" alt="Student Photo" class="student-photo-large">
+                        </div>
+
+                        <div class="result-details">
+                            <div class="detail-item">
+                                <div class="detail-label">Full Name</div>
+                                <div class="detail-value" id="resultName">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Enrollment Number</div>
+                                <div class="detail-value" id="resultEnrollment">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Father's Name</div>
+                                <div class="detail-value" id="resultFather">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Date of Birth</div>
+                                <div class="detail-value" id="resultDOB">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Academic Session</div>
+                                <div class="detail-value" id="resultSession">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Course Name</div>
+                                <div class="detail-value" id="resultCourse">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Result Status</div>
+                                <div class="detail-value" id="resultStatus">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">State</div>
+                                <div class="detail-value" id="resultState">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">District</div>
+                                <div class="detail-value" id="resultDistrict">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Centre Name</div>
+                                <div class="detail-value" id="resultCentre">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Centre Code</div>
+                                <div class="detail-value" id="resultCode">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Verification Date</div>
+                                <div class="detail-value" id="resultDate">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="verification-badge">
+                        <h3>🎓 VERIFIED STUDENT RECORD</h3>
+                        <p>This record is officially verified by ESDP Council</p>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-print" onclick="window.print()">🖨️ Print Certificate</button>
+                        <button class="btn-download" onclick="downloadCertificate()">📥 Download PDF</button>
+                        <button class="btn-secondary" onclick="clearVerification()">🔄 Search Again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load data from localStorage
+        let students = JSON.parse(localStorage.getItem('esdpStudents')) || [];
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ===== ADMIN FORM =====
+        document.getElementById('adminForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const photoInput = document.getElementById('studentPhoto');
+            const file = photoInput.files[0];
+
+            if (!file) {
+                showMessage('adminMessage', 'Please upload a photo', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const student = {
+                    id: Date.now(),
+                    session: document.getElementById('session').value,
+                    enrollment: document.getElementById('enrollment').value,
+                    photo: event.target.result,
+                    name: document.getElementById('studentName').value,
+                    father: document.getElementById('fatherName').value,
+                    dob: document.getElementById('dob').value,
+                    course: document.getElementById('courseName').value,
+                    result: document.getElementById('result').value,
+                    state: document.getElementById('state').value,
+                    district: document.getElementById('district').value,
+                    centre: document.getElementById('centreName').value,
+                    code: document.getElementById('centreCode').value,
+                    verifiedDate: new Date().toLocaleDateString('en-IN')
+                };
+
+                students.push(student);
+                localStorage.setItem('esdpStudents', JSON.stringify(students));
+
+                showMessage('adminMessage', '✅ Student record saved successfully!', 'success');
+                document.getElementById('adminForm').reset();
+                renderAdminTable();
+
+                setTimeout(() => {
+                    document.getElementById('adminMessage').style.display = 'none';
+                }, 3000);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('adminBody');
+
+            if (students.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="14" style="text-align:center; padding: 40px; color: #999;">📭 No records yet. Add students using the form above.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = students.map((student, index) => `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td><strong>${student.session}</strong></td>
+                    <td><strong>${student.enrollment}</strong></td>
+                    <td><img src="${student.photo}" alt="Student" class="photo-thumb"></td>
+                    <td>${student.name}</td>
+                    <td>${student.father}</td>
+                    <td>${student.dob}</td>
+                    <td>${student.course}</td>
+                    <td><span class="status-badge status-${student.result.toLowerCase()}">${student.result}</span></td>
+                    <td>${student.state}</td>
+                    <td>${student.district}</td>
+                    <td>${student.centre}</td>
+                    <td>${student.code}</td>
+                    <td>
+                        <button class="btn-primary" style="padding: 6px 10px; font-size: 0.85rem;" onclick="deleteStudent(${student.id})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function deleteStudent(id) {
+            if (confirm('Delete this student record?')) {
+                students = students.filter(s => s.id !== id);
+                localStorage.setItem('esdpStudents', JSON.stringify(students));
+                renderAdminTable();
+                showMessage('adminMessage', 'Record deleted!', 'info');
+            }
+        }
+
+        // ===== VERIFICATION LOGIC =====
+        function verifyStudent() {
+            const enrollment = document.getElementById('searchEnrollment').value.trim();
+            
+            if (!enrollment) {
+                showMessage('verifyMessage', 'Please enter an enrollment number', 'error');
+                return;
+            }
+
+            const student = students.find(s => s.enrollment.toLowerCase() === enrollment.toLowerCase());
+
+            if (!student) {
+                showMessage('verifyMessage', '❌ Student record not found. Please check your enrollment number.', 'error');
+                document.getElementById('verificationResult').classList.remove('show');
+                return;
+            }
+
+            // Display result
+            document.getElementById('resultPhoto').src = student.photo;
+            document.getElementById('resultName').textContent = student.name;
+            document.getElementById('resultEnrollment').textContent = student.enrollment;
+            document.getElementById('resultFather').textContent = student.father;
+            document.getElementById('resultDOB').textContent = new Date(student.dob).toLocaleDateString('en-IN');
+            document.getElementById('resultSession').textContent = student.session;
+            document.getElementById('resultCourse').textContent = student.course;
+            document.getElementById('resultStatus').innerHTML = `<span class="status-badge status-${student.result.toLowerCase()}">${student.result}</span>`;
+            document.getElementById('resultState').textContent = student.state;
+            document.getElementById('resultDistrict').textContent = student.district;
+            document.getElementById('resultCentre').textContent = student.centre;
+            document.getElementById('resultCode').textContent = student.code;
+            document.getElementById('resultDate').textContent = student.verifiedDate;
+
+            document.getElementById('verificationResult').classList.add('show');
+            showMessage('verifyMessage', '✅ Record found! Your details are verified below.', 'success');
+
+            document.getElementById('verificationResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function clearVerification() {
+            document.getElementById('searchEnrollment').value = '';
+            document.getElementById('verificationResult').classList.remove('show');
+            document.getElementById('verifyMessage').style.display = 'none';
+        }
+
+        function downloadCertificate() {
+            alert('PDF download feature coming soon! You can use Print → Save as PDF');
+        }
+
+        function showMessage(elementId, message, type) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.className = `message ${type}`;
+            el.style.display = 'block';
+        }
+
+        // Initial render
+        renderAdminTable();
+
+        // Demo Data (optional - remove in production)
+        function loadDemoData() {
+            if (students.length === 0) {
+                const demoStudents = [
+                    {
+                        id: 1, session: '2020-21', enrollment: '001101', 
+                        photo: 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22120%22%3E%3Crect fill=%22%230b4f8a%22 width=%22100%22 height=%22120%22/%3E%3Ctext x=%2250%22 y=%2260%22 font-size=%2224%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3E👤%3C/text%3E%3C/svg%3E',
+                        name: 'POOJA RAHANGDALE', father: 'RAMESH', dob: '1986-05-12',
+                        course: 'DIPLOMA IN BEAUTY CULTURE', result: 'PASS',
+                        state: 'MADHYA PRADESH', district: 'INDORE', centre: 'ESDP Centre', code: 'MP001',
+                        verifiedDate: new Date().toLocaleDateString('en-IN')
+                    }
+                ];
+                students = demoStudents;
+                localStorage.setItem('esdpStudents', JSON.stringify(students));
+                renderAdminTable();
+            }
+        }
+
+        // Uncomment to load demo data on first load
+        // loadDemoData();
+    </script>
+</body>
+</html>
